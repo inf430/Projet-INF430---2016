@@ -5,6 +5,7 @@ Intégration du projet dans vos environnements:
 ---Ouvrir NetBeans et dans le menu fichier, ouvrir le projet. En principe NetBeans doit directement le reconnaitre comme une Java Web Application
 ---Ouvrir le fichier : glassfish-resources.xml et modifier le password par le mot de passe de votre BD
 NB : Si votre BD à d'autres paramètres d'accès particulier alors vous devez les modifier
+--Après avoir compilé et exécuté le projet pour la premier fois, la bd sera générée automatiquement, alors, il faut mettre la propriété "Table Générération Strategy" à <<None>> pour éviter quà chaque compilation, la BD soit écrasée.
 
 Si vous remarquez bien, NetBeans met une petite icone attention au niveau de l'icone du projet. Comment le résoudre?
 En réalité, il survient parce que la Connexion à la datasource n'a pas été créé chez vous:
