@@ -1,0 +1,61 @@
+Intégration du projet dans vos environnements:
+
+---Créer une base de données dans PostgreSQL (avec pgAdmin ou par commande on s'enfout) nommées : gesnote 
+---Copier le projet (GestionNoteUy1) dans votre workspace
+---Ouvrir NetBeans et dans le menu fichier, ouvrir le projet. En principe NetBeans doit directement le reconnaitre comme une Java Web Application
+---Ouvrir le fichier : glassfish-resources.xml et modifier le password par le mot de passe de votre BD
+NB : Si votre BD à d'autres paramètres d'accès particulier alors vous devez les modifier
+
+Si vous remarquez bien, NetBeans met une petite icone attention au niveau de l'icone du projet. Comment le résoudre?
+En réalité, il survient parce que la Connexion à la datasource n'a pas été créé chez vous:
+-Clic droit sur le Projet
+-Dans le menu contextuel, au fond cliquez: <<Resolve DataSource problem...>>
+-selectionnez la datasource et cliquez sur <<Add Connection...>>
+-vérifiez les paramètres de connexion à la base de données, puis cliquez sur suivant
+-Au niveau du schema, choississez public
+-Validez jusqu'à la fin.
+En principe, le pb doit être résolu, et l'icone d'attention doit disparaitre.
+
+
+En principe à ce niveau vous pouvez desormais faire votre taf.
+
+
+-------------->Architecture de l'application
+
+--->Web Pages
+		--->WEB-INF/		(Les vues cachées, accessibles uniquement par les sevlets)
+			--->groupe1/		(Dossier qui correspond aux vues du groupe en question)
+			--->groupe2/
+			--->groupe3/
+			--->groupe4/
+			--->groupe5/
+			--->groupe6/
+		--->css/
+		--->bootstrap/
+		--->header.jsp
+		--->footer.jsp
+		--->index.jsp		(vues ouvertes, pas besoin de servlets)
+---->Source Packages
+		--->entities/		(les entities ou beans en fontion de votre jargon)
+		--->gesnote/
+			--->groupe1/
+				--->servlet/
+				--->modeles/	(En réalités sont des EJB Session de type Stateless: faites du Statefull, ça vous regarde)
+			--->groupe2/
+				--->servlet/
+				--->modeles/
+			--->groupe3/
+				--->servlet/
+				--->modeles/
+			--->groupe4/
+				--->servlet/
+				--->modeles/
+			--->groupe5/
+				--->servlet/
+				--->modeles/
+			--->groupe6/
+				--->servlet/
+				--->modeles/
+				
+NB : L'utilisation des facades n'est pas trop importes, mais si un groupe désire utilisés cette méthodes, qu'il se rassure de les avoir mis dans son paquage Model.
+Nous avons créer une EJB Session Stateless groupe1.modeles.AdminDao avec une fonction connexion pour montrer comment pourait être adaptés des EJB à nos cas d'utilisation. Nous l'avons appelé dans la servlet groupe1.servlet.ConnectServlet et où nous l'avons déclaré comme EJB
