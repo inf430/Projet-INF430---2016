@@ -6,16 +6,17 @@
 package gesnote.groupe1.servlet;
 
 
-import entities.Personne;
+import entities.*;
 import gesnote.groupe1.modeles.AdminDao;
-import java.io.IOException;
-import java.util.List;
+import java.io.IOException; 
+import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -36,14 +37,11 @@ public class ConnectServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
             
-            if (!dao.connection("test", "test")){
-                System.out.print("correct");
-            }
-            
-            //List<Personne> mesPers = pdao.findAll();
+            String parametre = request.getParameter("chaine");
+            PrintWriter writer = response.getWriter();
+            writer.write(dao.getMD5(parametre));
     }
 
     /**
@@ -55,18 +53,19 @@ public class ConnectServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+            String login = request.getParameter("login");
+            String password = request.getParameter("password");
+            if (!dao.exist(login, password)){
+                PrintWriter writer = response.getWriter();
+                //Arraylist<String> array = new Arraylist();
+                writer.write("");
+            }else{
+                HttpSession session = request.getSession();
+                Personne personne = dao.getPersonne(login, password);
+                session.setAttribute("login",personne.getLogin());
+                session.setAttribute("id",personne.getIdpersonne());
+            }
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
 
 }
