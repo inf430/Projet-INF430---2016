@@ -6,7 +6,7 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -27,14 +27,14 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author HP
  */
 @Entity
-@Table(name = "admin")
+@Table(name = "administrateur")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Admin.findAll", query = "SELECT a FROM Admin a"),
-    @NamedQuery(name = "Admin.findByIdadmin", query = "SELECT a FROM Admin a WHERE a.idadmin = :idadmin"),
-    @NamedQuery(name = "Admin.findByLogin", query = "SELECT a FROM Admin a WHERE a.login = :login"),
-    @NamedQuery(name = "Admin.findByPassword", query = "SELECT a FROM Admin a WHERE a.password = :password")})
-public class Admin implements Serializable {
+    @NamedQuery(name = "Administrateur.findAll", query = "SELECT a FROM Administrateur a"),
+    @NamedQuery(name = "Administrateur.findByIdadmin", query = "SELECT a FROM Administrateur a WHERE a.idadmin = :idadmin"),
+    @NamedQuery(name = "Administrateur.findByLogin", query = "SELECT a FROM Administrateur a WHERE a.login = :login"),
+    @NamedQuery(name = "Administrateur.findByPassword", query = "SELECT a FROM Administrateur a WHERE a.password = :password")})
+public class Administrateur implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -49,14 +49,14 @@ public class Admin implements Serializable {
     @Column(name = "password")
     private String password;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idadmin")
-    private List<Droit> droitList;
+    private Collection<Droit> droitCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idadmin")
-    private List<Role> roleList;
+    private Collection<Role> roleCollection;
 
-    public Admin() {
+    public Administrateur() {
     }
 
-    public Admin(Integer idadmin) {
+    public Administrateur(Integer idadmin) {
         this.idadmin = idadmin;
     }
 
@@ -85,21 +85,21 @@ public class Admin implements Serializable {
     }
 
     @XmlTransient
-    public List<Droit> getDroitList() {
-        return droitList;
+    public Collection<Droit> getDroitCollection() {
+        return droitCollection;
     }
 
-    public void setDroitList(List<Droit> droitList) {
-        this.droitList = droitList;
+    public void setDroitCollection(Collection<Droit> droitCollection) {
+        this.droitCollection = droitCollection;
     }
 
     @XmlTransient
-    public List<Role> getRoleList() {
-        return roleList;
+    public Collection<Role> getRoleCollection() {
+        return roleCollection;
     }
 
-    public void setRoleList(List<Role> roleList) {
-        this.roleList = roleList;
+    public void setRoleCollection(Collection<Role> roleCollection) {
+        this.roleCollection = roleCollection;
     }
 
     @Override
@@ -112,10 +112,10 @@ public class Admin implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Admin)) {
+        if (!(object instanceof Administrateur)) {
             return false;
         }
-        Admin other = (Admin) object;
+        Administrateur other = (Administrateur) object;
         if ((this.idadmin == null && other.idadmin != null) || (this.idadmin != null && !this.idadmin.equals(other.idadmin))) {
             return false;
         }
@@ -124,7 +124,7 @@ public class Admin implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Admin[ idadmin=" + idadmin + " ]";
+        return "entities.Administrateur[ idadmin=" + idadmin + " ]";
     }
     
 }

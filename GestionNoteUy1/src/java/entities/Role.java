@@ -6,7 +6,7 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -45,17 +45,17 @@ public class Role implements Serializable {
     @Size(max = 50)
     @Column(name = "role")
     private String role;
-    @ManyToMany(mappedBy = "roleList")
-    private List<Droit> droitList;
-    @ManyToMany(mappedBy = "roleList")
-    private List<Enseignant> enseignantList;
-    @ManyToMany(mappedBy = "roleList")
-    private List<Etudiant> etudiantList;
-    @ManyToMany(mappedBy = "roleList")
-    private List<Administratif> administratifList;
+    @ManyToMany(mappedBy = "roleCollection")
+    private Collection<Droit> droitCollection;
+    @ManyToMany(mappedBy = "roleCollection")
+    private Collection<Enseignant> enseignantCollection;
+    @ManyToMany(mappedBy = "roleCollection")
+    private Collection<Etudiant> etudiantCollection;
+    @ManyToMany(mappedBy = "roleCollection")
+    private Collection<Administratif> administratifCollection;
     @JoinColumn(name = "idadmin", referencedColumnName = "idadmin")
     @ManyToOne(optional = false)
-    private Admin idadmin;
+    private Administrateur idadmin;
 
     public Role() {
     }
@@ -81,46 +81,46 @@ public class Role implements Serializable {
     }
 
     @XmlTransient
-    public List<Droit> getDroitList() {
-        return droitList;
+    public Collection<Droit> getDroitCollection() {
+        return droitCollection;
     }
 
-    public void setDroitList(List<Droit> droitList) {
-        this.droitList = droitList;
-    }
-
-    @XmlTransient
-    public List<Enseignant> getEnseignantList() {
-        return enseignantList;
-    }
-
-    public void setEnseignantList(List<Enseignant> enseignantList) {
-        this.enseignantList = enseignantList;
+    public void setDroitCollection(Collection<Droit> droitCollection) {
+        this.droitCollection = droitCollection;
     }
 
     @XmlTransient
-    public List<Etudiant> getEtudiantList() {
-        return etudiantList;
+    public Collection<Enseignant> getEnseignantCollection() {
+        return enseignantCollection;
     }
 
-    public void setEtudiantList(List<Etudiant> etudiantList) {
-        this.etudiantList = etudiantList;
+    public void setEnseignantCollection(Collection<Enseignant> enseignantCollection) {
+        this.enseignantCollection = enseignantCollection;
     }
 
     @XmlTransient
-    public List<Administratif> getAdministratifList() {
-        return administratifList;
+    public Collection<Etudiant> getEtudiantCollection() {
+        return etudiantCollection;
     }
 
-    public void setAdministratifList(List<Administratif> administratifList) {
-        this.administratifList = administratifList;
+    public void setEtudiantCollection(Collection<Etudiant> etudiantCollection) {
+        this.etudiantCollection = etudiantCollection;
     }
 
-    public Admin getIdadmin() {
+    @XmlTransient
+    public Collection<Administratif> getAdministratifCollection() {
+        return administratifCollection;
+    }
+
+    public void setAdministratifCollection(Collection<Administratif> administratifCollection) {
+        this.administratifCollection = administratifCollection;
+    }
+
+    public Administrateur getIdadmin() {
         return idadmin;
     }
 
-    public void setIdadmin(Admin idadmin) {
+    public void setIdadmin(Administrateur idadmin) {
         this.idadmin = idadmin;
     }
 

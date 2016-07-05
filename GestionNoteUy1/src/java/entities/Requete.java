@@ -33,7 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Requete.findAll", query = "SELECT r FROM Requete r"),
     @NamedQuery(name = "Requete.findByIdrequete", query = "SELECT r FROM Requete r WHERE r.idrequete = :idrequete"),
     @NamedQuery(name = "Requete.findByObjet", query = "SELECT r FROM Requete r WHERE r.objet = :objet"),
-    @NamedQuery(name = "Requete.findByDate", query = "SELECT r FROM Requete r WHERE r.date = :date"),
+    @NamedQuery(name = "Requete.findByDateRequete", query = "SELECT r FROM Requete r WHERE r.dateRequete = :dateRequete"),
     @NamedQuery(name = "Requete.findByEtat", query = "SELECT r FROM Requete r WHERE r.etat = :etat")})
 public class Requete implements Serializable {
 
@@ -47,8 +47,8 @@ public class Requete implements Serializable {
     @Column(name = "objet")
     private String objet;
     @Size(max = 10)
-    @Column(name = "date")
-    private String date;
+    @Column(name = "date_requete")
+    private String dateRequete;
     @Size(max = 30)
     @Column(name = "etat")
     private String etat;
@@ -81,12 +81,12 @@ public class Requete implements Serializable {
         this.objet = objet;
     }
 
-    public String getDate() {
-        return date;
+    public String getDateRequete() {
+        return dateRequete;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setDateRequete(String dateRequete) {
+        this.dateRequete = dateRequete;
     }
 
     public String getEtat() {

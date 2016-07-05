@@ -1,3 +1,20 @@
+-- -----------------------------------------------------------------------------
+--             Generation d'une base de donnees pour
+--                           PostgreSQL
+--                        (1/7/2016 12:57:00)
+-- -----------------------------------------------------------------------------
+--      Nom de la base : bdprojet_final
+--      Projet : 
+--      Auteur : clarisse
+--      Date de derniere modification : 1/7/2016 12:56:22
+-- -----------------------------------------------------------------------------
+
+-- drop database bdprojet_final;
+-- -----------------------------------------------------------------------------
+--       CREATION DE LA BASE 
+-- -----------------------------------------------------------------------------
+
+-- CREATE DATABASE bdprojet_final;
 
 -- -----------------------------------------------------------------------------
 --       TABLE : DROIT
@@ -28,7 +45,7 @@ CREATE TABLE REQUETE
     IDREQUETE serial NOT NULL  ,
     MATRICULE varchar(10) NOT NULL  ,
     OBJET text NULL  ,
-    DATE varchar(10) NULL  ,
+    DATE_requete varchar(10) NULL  ,
     ETAT varchar(30) NULL  
 ,   CONSTRAINT PK_REQUETE PRIMARY KEY (IDREQUETE)
    );
@@ -177,8 +194,8 @@ CREATE  INDEX I_FK_MATIERE_UE_ANNEE_ACADEMIQ
 CREATE TABLE EXAMEN
    (
     IDEXAMEN serial NOT NULL  ,
-    DATE varchar(10) NULL  ,
-    TYPE varchar(30) NULL  
+    DATE_exam varchar(10) NULL  ,
+    TYPE_exam varchar(30) NULL  
 ,   CONSTRAINT PK_EXAMEN PRIMARY KEY (IDEXAMEN)
    );
 
@@ -214,10 +231,10 @@ CREATE  INDEX I_FK_ETUDIANT_EXAM_ANNEE_ACADE
     ;
 
 -- -----------------------------------------------------------------------------
---       TABLE : ADMIN
+--       TABLE : administrateur
 -- -----------------------------------------------------------------------------
 
-CREATE TABLE ADMIN
+CREATE TABLE administrateur
    (
     IDADMIN serial NOT NULL  ,
     LOGIN varchar(50) NULL  ,
@@ -605,7 +622,7 @@ CREATE TABLE REPONSE
     IDREPONSE serial NOT NULL  ,
     MATRICULE varchar(10) NOT NULL  ,
     IDREQUETE int4 NOT NULL  ,
-    DATE varchar(10) NULL  ,
+    DATE_reponse varchar(10) NULL  ,
     CONTENU text NULL  
 ,   CONSTRAINT PK_REPONSE PRIMARY KEY (IDREPONSE)
    );
@@ -723,7 +740,7 @@ CREATE  INDEX I_FK_ROLEETUDIANT_ETUDIANT
 ALTER TABLE DROIT ADD 
      CONSTRAINT FK_DROIT_ADMIN
           FOREIGN KEY (IDADMIN)
-               REFERENCES ADMIN (IDADMIN);
+               REFERENCES administrateur (IDADMIN);
 
 ALTER TABLE REQUETE ADD 
      CONSTRAINT FK_REQUETE_ETUDIANT
@@ -898,7 +915,7 @@ ALTER TABLE ENSEIGNANT_CLASSE_JURY ADD
 ALTER TABLE ROLE ADD 
      CONSTRAINT FK_ROLE_ADMIN
           FOREIGN KEY (IDADMIN)
-               REFERENCES ADMIN (IDADMIN);
+               REFERENCES administrateur (IDADMIN);
 
 ALTER TABLE FILIERE ADD 
      CONSTRAINT FK_FILIERE_DEPARTEMENT

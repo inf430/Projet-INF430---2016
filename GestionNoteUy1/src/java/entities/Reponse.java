@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Reponse.findAll", query = "SELECT r FROM Reponse r"),
     @NamedQuery(name = "Reponse.findByIdreponse", query = "SELECT r FROM Reponse r WHERE r.idreponse = :idreponse"),
-    @NamedQuery(name = "Reponse.findByDate", query = "SELECT r FROM Reponse r WHERE r.date = :date"),
+    @NamedQuery(name = "Reponse.findByDateReponse", query = "SELECT r FROM Reponse r WHERE r.dateReponse = :dateReponse"),
     @NamedQuery(name = "Reponse.findByContenu", query = "SELECT r FROM Reponse r WHERE r.contenu = :contenu")})
 public class Reponse implements Serializable {
 
@@ -42,8 +42,8 @@ public class Reponse implements Serializable {
     @Column(name = "idreponse")
     private Integer idreponse;
     @Size(max = 10)
-    @Column(name = "date")
-    private String date;
+    @Column(name = "date_reponse")
+    private String dateReponse;
     @Size(max = 2147483647)
     @Column(name = "contenu")
     private String contenu;
@@ -69,12 +69,12 @@ public class Reponse implements Serializable {
         this.idreponse = idreponse;
     }
 
-    public String getDate() {
-        return date;
+    public String getDateReponse() {
+        return dateReponse;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setDateReponse(String dateReponse) {
+        this.dateReponse = dateReponse;
     }
 
     public String getContenu() {

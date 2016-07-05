@@ -20,6 +20,9 @@ En principe, le pb doit être résolu, et l'icone d'attention doit disparaitre.
 
 En principe à ce niveau vous pouvez desormais faire votre taf.
 
+---Après avoir compilez le projet pour la première fois, modifier l'attribut "Table Génération Strategy" du fichier persistence.xml à <<None>>
+---ouvrez votre BD (avec pgAdmin, ou par ligne de commande, on s'enfout) et vérifiez la présence de toutes les tables(32)
+---Si vos tables n'ont pas de données (Table administratif par exemple), éxécutez le fichier <<chargementdonnees_bon.sql>> par ligne de commande pour insérer vos données dans 
 
 -------------->Architecture de l'application
 

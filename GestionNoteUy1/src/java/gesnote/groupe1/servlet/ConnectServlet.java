@@ -5,7 +5,6 @@
  */
 package gesnote.groupe1.servlet;
 
-
 import entities.Personne;
 import gesnote.groupe1.modeles.AdminDao;
 import java.io.IOException;
@@ -38,12 +37,12 @@ public class ConnectServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+            //ADMINDAO dao = new ADMINDAO();
             
-            if (!dao.connection("test", "test")){
+            if (dao.connection("atsa", "atsa")){
                 System.out.print("correct");
             }
             
-            //List<Personne> mesPers = pdao.findAll();
     }
 
     /**

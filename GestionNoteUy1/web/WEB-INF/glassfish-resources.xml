@@ -6,7 +6,7 @@
         <property name="portNumber" value="5432"/>
         <property name="databaseName" value="gesnote"/>
         <property name="User" value="postgres"/>
-        <property name="Password" value="test"/>
+        <property name="Password" value="nanoSol"/>
         <property name="URL" value="jdbc:postgresql://localhost:5432/gesnote"/>
         <property name="driverClass" value="org.postgresql.Driver"/>
     </jdbc-connection-pool>

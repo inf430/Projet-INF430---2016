@@ -6,7 +6,7 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -51,7 +51,7 @@ public class Filiere implements Serializable {
     @Column(name = "libelle")
     private String libelle;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idfiliere")
-    private List<Classe> classeList;
+    private Collection<Classe> classeCollection;
     @JoinColumn(name = "iddepartement", referencedColumnName = "iddepartement")
     @ManyToOne(optional = false)
     private Departement iddepartement;
@@ -88,12 +88,12 @@ public class Filiere implements Serializable {
     }
 
     @XmlTransient
-    public List<Classe> getClasseList() {
-        return classeList;
+    public Collection<Classe> getClasseCollection() {
+        return classeCollection;
     }
 
-    public void setClasseList(List<Classe> classeList) {
-        this.classeList = classeList;
+    public void setClasseCollection(Collection<Classe> classeCollection) {
+        this.classeCollection = classeCollection;
     }
 
     public Departement getIddepartement() {
