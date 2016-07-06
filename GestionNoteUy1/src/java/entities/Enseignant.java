@@ -68,8 +68,8 @@ public class Enseignant implements Serializable {
     private List<EnseignantClasseJury> enseignantClasseJuryList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "matricule")
     private List<EtablirDroit> etablirDroitList;
-    @JoinColumn(name = "idpersonne", referencedColumnName = "idpersonne")
-    @OneToOne(optional = false)
+    @JoinColumn( name = "idpersonne" , referencedColumnName = "idpersonne" )
+    @OneToOne( cascade = CascadeType.ALL)
     private Personne idpersonne;
     @JoinColumn(name = "iddepartement", referencedColumnName = "iddepartement")
     @ManyToOne(optional = false)
