@@ -6,7 +6,7 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -32,8 +32,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Examen.findAll", query = "SELECT e FROM Examen e"),
     @NamedQuery(name = "Examen.findByIdexamen", query = "SELECT e FROM Examen e WHERE e.idexamen = :idexamen"),
-    @NamedQuery(name = "Examen.findByDate", query = "SELECT e FROM Examen e WHERE e.date = :date"),
-    @NamedQuery(name = "Examen.findByType", query = "SELECT e FROM Examen e WHERE e.type = :type")})
+    @NamedQuery(name = "Examen.findByDateExam", query = "SELECT e FROM Examen e WHERE e.dateExam = :dateExam"),
+    @NamedQuery(name = "Examen.findByTypeExam", query = "SELECT e FROM Examen e WHERE e.typeExam = :typeExam")})
 public class Examen implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -43,15 +43,15 @@ public class Examen implements Serializable {
     @Column(name = "idexamen")
     private Integer idexamen;
     @Size(max = 10)
-    @Column(name = "date")
-    private String date;
+    @Column(name = "date_exam")
+    private String dateExam;
     @Size(max = 30)
-    @Column(name = "type")
-    private String type;
+    @Column(name = "type_exam")
+    private String typeExam;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idexamen")
-    private List<EtudiantExam> etudiantExamList;
+    private Collection<EtudiantExam> etudiantExamCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idexamen")
-    private List<MatiereExam> matiereExamList;
+    private Collection<MatiereExam> matiereExamCollection;
 
     public Examen() {
     }
@@ -68,38 +68,38 @@ public class Examen implements Serializable {
         this.idexamen = idexamen;
     }
 
-    public String getDate() {
-        return date;
+    public String getDateExam() {
+        return dateExam;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setDateExam(String dateExam) {
+        this.dateExam = dateExam;
     }
 
-    public String getType() {
-        return type;
+    public String getTypeExam() {
+        return typeExam;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    @XmlTransient
-    public List<EtudiantExam> getEtudiantExamList() {
-        return etudiantExamList;
-    }
-
-    public void setEtudiantExamList(List<EtudiantExam> etudiantExamList) {
-        this.etudiantExamList = etudiantExamList;
+    public void setTypeExam(String typeExam) {
+        this.typeExam = typeExam;
     }
 
     @XmlTransient
-    public List<MatiereExam> getMatiereExamList() {
-        return matiereExamList;
+    public Collection<EtudiantExam> getEtudiantExamCollection() {
+        return etudiantExamCollection;
     }
 
-    public void setMatiereExamList(List<MatiereExam> matiereExamList) {
-        this.matiereExamList = matiereExamList;
+    public void setEtudiantExamCollection(Collection<EtudiantExam> etudiantExamCollection) {
+        this.etudiantExamCollection = etudiantExamCollection;
+    }
+
+    @XmlTransient
+    public Collection<MatiereExam> getMatiereExamCollection() {
+        return matiereExamCollection;
+    }
+
+    public void setMatiereExamCollection(Collection<MatiereExam> matiereExamCollection) {
+        this.matiereExamCollection = matiereExamCollection;
     }
 
     @Override

@@ -21,7 +21,7 @@
                 </div>
                 <div class="form-group">
                     <label for="code">Code du semestre</label>
-                    <input type="text" name="code" id="code">
+                    <input type="text" name="code" id="code" required="">
                 </div>
                 <button type="reset">Annuler</button>
                 <button type="submit" id="valider">Valider</button>

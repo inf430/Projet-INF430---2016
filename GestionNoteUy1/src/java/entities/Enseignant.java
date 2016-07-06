@@ -6,7 +6,7 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -57,19 +57,19 @@ public class Enseignant implements Serializable {
         @JoinColumn(name = "matricule", referencedColumnName = "matricule")}, inverseJoinColumns = {
         @JoinColumn(name = "idrole", referencedColumnName = "idrole")})
     @ManyToMany
-    private List<Role> roleList;
+    private Collection<Role> roleCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "matricule")
-    private List<EnseignantMat> enseignantMatList;
+    private Collection<EnseignantMat> enseignantMatCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "matricule")
-    private List<Reponse> reponseList;
+    private Collection<Reponse> reponseCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "matricule")
-    private List<EnseignantChefDepartement> enseignantChefDepartementList;
+    private Collection<EnseignantChefDepartement> enseignantChefDepartementCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "matricule")
-    private List<EnseignantClasseJury> enseignantClasseJuryList;
+    private Collection<EnseignantClasseJury> enseignantClasseJuryCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "matricule")
-    private List<EtablirDroit> etablirDroitList;
-    @JoinColumn( name = "idpersonne" , referencedColumnName = "idpersonne" )
-    @OneToOne( cascade = CascadeType.ALL)
+    private Collection<EtablirDroit> etablirDroitCollection;
+    @JoinColumn(name = "idpersonne", referencedColumnName = "idpersonne")
+    @OneToOne(optional = false)
     private Personne idpersonne;
     @JoinColumn(name = "iddepartement", referencedColumnName = "iddepartement")
     @ManyToOne(optional = false)
@@ -107,57 +107,57 @@ public class Enseignant implements Serializable {
     }
 
     @XmlTransient
-    public List<Role> getRoleList() {
-        return roleList;
+    public Collection<Role> getRoleCollection() {
+        return roleCollection;
     }
 
-    public void setRoleList(List<Role> roleList) {
-        this.roleList = roleList;
-    }
-
-    @XmlTransient
-    public List<EnseignantMat> getEnseignantMatList() {
-        return enseignantMatList;
-    }
-
-    public void setEnseignantMatList(List<EnseignantMat> enseignantMatList) {
-        this.enseignantMatList = enseignantMatList;
+    public void setRoleCollection(Collection<Role> roleCollection) {
+        this.roleCollection = roleCollection;
     }
 
     @XmlTransient
-    public List<Reponse> getReponseList() {
-        return reponseList;
+    public Collection<EnseignantMat> getEnseignantMatCollection() {
+        return enseignantMatCollection;
     }
 
-    public void setReponseList(List<Reponse> reponseList) {
-        this.reponseList = reponseList;
-    }
-
-    @XmlTransient
-    public List<EnseignantChefDepartement> getEnseignantChefDepartementList() {
-        return enseignantChefDepartementList;
-    }
-
-    public void setEnseignantChefDepartementList(List<EnseignantChefDepartement> enseignantChefDepartementList) {
-        this.enseignantChefDepartementList = enseignantChefDepartementList;
+    public void setEnseignantMatCollection(Collection<EnseignantMat> enseignantMatCollection) {
+        this.enseignantMatCollection = enseignantMatCollection;
     }
 
     @XmlTransient
-    public List<EnseignantClasseJury> getEnseignantClasseJuryList() {
-        return enseignantClasseJuryList;
+    public Collection<Reponse> getReponseCollection() {
+        return reponseCollection;
     }
 
-    public void setEnseignantClasseJuryList(List<EnseignantClasseJury> enseignantClasseJuryList) {
-        this.enseignantClasseJuryList = enseignantClasseJuryList;
+    public void setReponseCollection(Collection<Reponse> reponseCollection) {
+        this.reponseCollection = reponseCollection;
     }
 
     @XmlTransient
-    public List<EtablirDroit> getEtablirDroitList() {
-        return etablirDroitList;
+    public Collection<EnseignantChefDepartement> getEnseignantChefDepartementCollection() {
+        return enseignantChefDepartementCollection;
     }
 
-    public void setEtablirDroitList(List<EtablirDroit> etablirDroitList) {
-        this.etablirDroitList = etablirDroitList;
+    public void setEnseignantChefDepartementCollection(Collection<EnseignantChefDepartement> enseignantChefDepartementCollection) {
+        this.enseignantChefDepartementCollection = enseignantChefDepartementCollection;
+    }
+
+    @XmlTransient
+    public Collection<EnseignantClasseJury> getEnseignantClasseJuryCollection() {
+        return enseignantClasseJuryCollection;
+    }
+
+    public void setEnseignantClasseJuryCollection(Collection<EnseignantClasseJury> enseignantClasseJuryCollection) {
+        this.enseignantClasseJuryCollection = enseignantClasseJuryCollection;
+    }
+
+    @XmlTransient
+    public Collection<EtablirDroit> getEtablirDroitCollection() {
+        return etablirDroitCollection;
+    }
+
+    public void setEtablirDroitCollection(Collection<EtablirDroit> etablirDroitCollection) {
+        this.etablirDroitCollection = etablirDroitCollection;
     }
 
     public Personne getIdpersonne() {

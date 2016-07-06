@@ -6,7 +6,7 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -47,9 +47,9 @@ public class Administratif implements Serializable {
         @JoinColumn(name = "idadministatif", referencedColumnName = "idadministatif")}, inverseJoinColumns = {
         @JoinColumn(name = "idrole", referencedColumnName = "idrole")})
     @ManyToMany
-    private List<Role> roleList;
+    private Collection<Role> roleCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idadministatif")
-    private List<EtablirDroit> etablirDroitList;
+    private Collection<EtablirDroit> etablirDroitCollection;
     @JoinColumn(name = "idpersonne", referencedColumnName = "idpersonne")
     @OneToOne(optional = false)
     private Personne idpersonne;
@@ -70,21 +70,21 @@ public class Administratif implements Serializable {
     }
 
     @XmlTransient
-    public List<Role> getRoleList() {
-        return roleList;
+    public Collection<Role> getRoleCollection() {
+        return roleCollection;
     }
 
-    public void setRoleList(List<Role> roleList) {
-        this.roleList = roleList;
+    public void setRoleCollection(Collection<Role> roleCollection) {
+        this.roleCollection = roleCollection;
     }
 
     @XmlTransient
-    public List<EtablirDroit> getEtablirDroitList() {
-        return etablirDroitList;
+    public Collection<EtablirDroit> getEtablirDroitCollection() {
+        return etablirDroitCollection;
     }
 
-    public void setEtablirDroitList(List<EtablirDroit> etablirDroitList) {
-        this.etablirDroitList = etablirDroitList;
+    public void setEtablirDroitCollection(Collection<EtablirDroit> etablirDroitCollection) {
+        this.etablirDroitCollection = etablirDroitCollection;
     }
 
     public Personne getIdpersonne() {

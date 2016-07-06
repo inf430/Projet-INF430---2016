@@ -3,16 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Paulostar/Documents/NetBeansProjects/Projet-INF430---2016/GestionNoteUy1/src/conf/persistence.xml</file>
-            <file>file:/C:/Users/Paulostar/Documents/NetBeansProjects/Projet-INF430---2016/GestionNoteUy1/src/java/entities/Personne.java</file>
+            <file>file:/C:/Users/Paulostar/Documents/NetBeansProjects/Projet-INF430---2016/GestionNoteUy1/web/WEB-INF/groupe1/add_matieres_exam.jsp</file>
+            <file>file:/C:/Users/Paulostar/Documents/NetBeansProjects/Projet-INF430---2016/GestionNoteUy1/src/java/gesnote/groupe1/servlet/CreateAdministratifServlet.java</file>
             <file>file:/C:/Users/Paulostar/Documents/NetBeansProjects/Projet-INF430---2016/GestionNoteUy1/src/java/gesnote/groupe1/modeles/AdminDao.java</file>
-            <file>file:/C:/Users/Paulostar/Documents/NetBeansProjects/Projet-INF430---2016/GestionNoteUy1/web/WEB-INF/groupe1/nouvel_enseignant.jsp</file>
-            <file>file:/C:/Users/Paulostar/Documents/NetBeansProjects/Projet-INF430---2016/GestionNoteUy1/web/assets/js/connexion.js</file>
-            <file>file:/C:/Users/Paulostar/Documents/NetBeansProjects/Projet-INF430---2016/GestionNoteUy1/web/WEB-INF/Acceuil.jsp</file>
-            <file>file:/C:/Users/Paulostar/Documents/NetBeansProjects/Projet-INF430---2016/GestionNoteUy1/web/assets/js/groupe1/n_enseignant.js</file>
-            <file>file:/C:/Users/Paulostar/Documents/NetBeansProjects/Projet-INF430---2016/GestionNoteUy1/src/java/gesnote/groupe1/servlet/ConnectServlet.java</file>
-            <file>file:/C:/Users/Paulostar/Documents/NetBeansProjects/Projet-INF430---2016/GestionNoteUy1/src/java/gesnote/groupe1/servlet/CreateTeacherServlet.java</file>
-            <file>file:/C:/Users/Paulostar/Documents/NetBeansProjects/Projet-INF430---2016/GestionNoteUy1/src/java/entities/Enseignant.java</file>
         </group>
     </open-files>
 </project-private>

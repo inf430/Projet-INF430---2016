@@ -6,7 +6,7 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -45,25 +45,25 @@ public class AnneeAcademique implements Serializable {
     @Column(name = "etat")
     private String etat;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "annee")
-    private List<EnseignantMat> enseignantMatList;
+    private Collection<EnseignantMat> enseignantMatCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "annee")
-    private List<MatiereUe> matiereUeList;
+    private Collection<MatiereUe> matiereUeCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "annee")
-    private List<Semestre> semestreList;
+    private Collection<Semestre> semestreCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "annee")
-    private List<EnseignantChefDepartement> enseignantChefDepartementList;
+    private Collection<EnseignantChefDepartement> enseignantChefDepartementCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "annee")
-    private List<EnseignantClasseJury> enseignantClasseJuryList;
+    private Collection<EnseignantClasseJury> enseignantClasseJuryCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "annee")
-    private List<EtudiantExam> etudiantExamList;
+    private Collection<EtudiantExam> etudiantExamCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "annee")
-    private List<Inscription> inscriptionList;
+    private Collection<Inscription> inscriptionCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "annee")
-    private List<MatiereExam> matiereExamList;
+    private Collection<MatiereExam> matiereExamCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "annee")
-    private List<EtudiantClasse> etudiantClasseList;
+    private Collection<EtudiantClasse> etudiantClasseCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "annee")
-    private List<UeClasse> ueClasseList;
+    private Collection<UeClasse> ueClasseCollection;
 
     public AnneeAcademique() {
     }
@@ -89,93 +89,93 @@ public class AnneeAcademique implements Serializable {
     }
 
     @XmlTransient
-    public List<EnseignantMat> getEnseignantMatList() {
-        return enseignantMatList;
+    public Collection<EnseignantMat> getEnseignantMatCollection() {
+        return enseignantMatCollection;
     }
 
-    public void setEnseignantMatList(List<EnseignantMat> enseignantMatList) {
-        this.enseignantMatList = enseignantMatList;
-    }
-
-    @XmlTransient
-    public List<MatiereUe> getMatiereUeList() {
-        return matiereUeList;
-    }
-
-    public void setMatiereUeList(List<MatiereUe> matiereUeList) {
-        this.matiereUeList = matiereUeList;
+    public void setEnseignantMatCollection(Collection<EnseignantMat> enseignantMatCollection) {
+        this.enseignantMatCollection = enseignantMatCollection;
     }
 
     @XmlTransient
-    public List<Semestre> getSemestreList() {
-        return semestreList;
+    public Collection<MatiereUe> getMatiereUeCollection() {
+        return matiereUeCollection;
     }
 
-    public void setSemestreList(List<Semestre> semestreList) {
-        this.semestreList = semestreList;
-    }
-
-    @XmlTransient
-    public List<EnseignantChefDepartement> getEnseignantChefDepartementList() {
-        return enseignantChefDepartementList;
-    }
-
-    public void setEnseignantChefDepartementList(List<EnseignantChefDepartement> enseignantChefDepartementList) {
-        this.enseignantChefDepartementList = enseignantChefDepartementList;
+    public void setMatiereUeCollection(Collection<MatiereUe> matiereUeCollection) {
+        this.matiereUeCollection = matiereUeCollection;
     }
 
     @XmlTransient
-    public List<EnseignantClasseJury> getEnseignantClasseJuryList() {
-        return enseignantClasseJuryList;
+    public Collection<Semestre> getSemestreCollection() {
+        return semestreCollection;
     }
 
-    public void setEnseignantClasseJuryList(List<EnseignantClasseJury> enseignantClasseJuryList) {
-        this.enseignantClasseJuryList = enseignantClasseJuryList;
-    }
-
-    @XmlTransient
-    public List<EtudiantExam> getEtudiantExamList() {
-        return etudiantExamList;
-    }
-
-    public void setEtudiantExamList(List<EtudiantExam> etudiantExamList) {
-        this.etudiantExamList = etudiantExamList;
+    public void setSemestreCollection(Collection<Semestre> semestreCollection) {
+        this.semestreCollection = semestreCollection;
     }
 
     @XmlTransient
-    public List<Inscription> getInscriptionList() {
-        return inscriptionList;
+    public Collection<EnseignantChefDepartement> getEnseignantChefDepartementCollection() {
+        return enseignantChefDepartementCollection;
     }
 
-    public void setInscriptionList(List<Inscription> inscriptionList) {
-        this.inscriptionList = inscriptionList;
-    }
-
-    @XmlTransient
-    public List<MatiereExam> getMatiereExamList() {
-        return matiereExamList;
-    }
-
-    public void setMatiereExamList(List<MatiereExam> matiereExamList) {
-        this.matiereExamList = matiereExamList;
+    public void setEnseignantChefDepartementCollection(Collection<EnseignantChefDepartement> enseignantChefDepartementCollection) {
+        this.enseignantChefDepartementCollection = enseignantChefDepartementCollection;
     }
 
     @XmlTransient
-    public List<EtudiantClasse> getEtudiantClasseList() {
-        return etudiantClasseList;
+    public Collection<EnseignantClasseJury> getEnseignantClasseJuryCollection() {
+        return enseignantClasseJuryCollection;
     }
 
-    public void setEtudiantClasseList(List<EtudiantClasse> etudiantClasseList) {
-        this.etudiantClasseList = etudiantClasseList;
+    public void setEnseignantClasseJuryCollection(Collection<EnseignantClasseJury> enseignantClasseJuryCollection) {
+        this.enseignantClasseJuryCollection = enseignantClasseJuryCollection;
     }
 
     @XmlTransient
-    public List<UeClasse> getUeClasseList() {
-        return ueClasseList;
+    public Collection<EtudiantExam> getEtudiantExamCollection() {
+        return etudiantExamCollection;
     }
 
-    public void setUeClasseList(List<UeClasse> ueClasseList) {
-        this.ueClasseList = ueClasseList;
+    public void setEtudiantExamCollection(Collection<EtudiantExam> etudiantExamCollection) {
+        this.etudiantExamCollection = etudiantExamCollection;
+    }
+
+    @XmlTransient
+    public Collection<Inscription> getInscriptionCollection() {
+        return inscriptionCollection;
+    }
+
+    public void setInscriptionCollection(Collection<Inscription> inscriptionCollection) {
+        this.inscriptionCollection = inscriptionCollection;
+    }
+
+    @XmlTransient
+    public Collection<MatiereExam> getMatiereExamCollection() {
+        return matiereExamCollection;
+    }
+
+    public void setMatiereExamCollection(Collection<MatiereExam> matiereExamCollection) {
+        this.matiereExamCollection = matiereExamCollection;
+    }
+
+    @XmlTransient
+    public Collection<EtudiantClasse> getEtudiantClasseCollection() {
+        return etudiantClasseCollection;
+    }
+
+    public void setEtudiantClasseCollection(Collection<EtudiantClasse> etudiantClasseCollection) {
+        this.etudiantClasseCollection = etudiantClasseCollection;
+    }
+
+    @XmlTransient
+    public Collection<UeClasse> getUeClasseCollection() {
+        return ueClasseCollection;
+    }
+
+    public void setUeClasseCollection(Collection<UeClasse> ueClasseCollection) {
+        this.ueClasseCollection = ueClasseCollection;
     }
 
     @Override

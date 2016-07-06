@@ -6,7 +6,7 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -45,7 +45,7 @@ public class Niveau implements Serializable {
     @Column(name = "cycle")
     private String cycle;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "niveau")
-    private List<Classe> classeList;
+    private Collection<Classe> classeCollection;
 
     public Niveau() {
     }
@@ -71,12 +71,12 @@ public class Niveau implements Serializable {
     }
 
     @XmlTransient
-    public List<Classe> getClasseList() {
-        return classeList;
+    public Collection<Classe> getClasseCollection() {
+        return classeCollection;
     }
 
-    public void setClasseList(List<Classe> classeList) {
-        this.classeList = classeList;
+    public void setClasseCollection(Collection<Classe> classeCollection) {
+        this.classeCollection = classeCollection;
     }
 
     @Override

@@ -6,7 +6,7 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -47,9 +47,9 @@ public class Classe implements Serializable {
     @Column(name = "nom")
     private String nom;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idclasse")
-    private List<EnseignantClasseJury> enseignantClasseJuryList;
+    private Collection<EnseignantClasseJury> enseignantClasseJuryCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idclasse")
-    private List<EtudiantClasse> etudiantClasseList;
+    private Collection<EtudiantClasse> etudiantClasseCollection;
     @JoinColumn(name = "niveau", referencedColumnName = "niveau")
     @ManyToOne(optional = false)
     private Niveau niveau;
@@ -57,7 +57,7 @@ public class Classe implements Serializable {
     @ManyToOne(optional = false)
     private Filiere idfiliere;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idclasse")
-    private List<UeClasse> ueClasseList;
+    private Collection<UeClasse> ueClasseCollection;
 
     public Classe() {
     }
@@ -83,21 +83,21 @@ public class Classe implements Serializable {
     }
 
     @XmlTransient
-    public List<EnseignantClasseJury> getEnseignantClasseJuryList() {
-        return enseignantClasseJuryList;
+    public Collection<EnseignantClasseJury> getEnseignantClasseJuryCollection() {
+        return enseignantClasseJuryCollection;
     }
 
-    public void setEnseignantClasseJuryList(List<EnseignantClasseJury> enseignantClasseJuryList) {
-        this.enseignantClasseJuryList = enseignantClasseJuryList;
+    public void setEnseignantClasseJuryCollection(Collection<EnseignantClasseJury> enseignantClasseJuryCollection) {
+        this.enseignantClasseJuryCollection = enseignantClasseJuryCollection;
     }
 
     @XmlTransient
-    public List<EtudiantClasse> getEtudiantClasseList() {
-        return etudiantClasseList;
+    public Collection<EtudiantClasse> getEtudiantClasseCollection() {
+        return etudiantClasseCollection;
     }
 
-    public void setEtudiantClasseList(List<EtudiantClasse> etudiantClasseList) {
-        this.etudiantClasseList = etudiantClasseList;
+    public void setEtudiantClasseCollection(Collection<EtudiantClasse> etudiantClasseCollection) {
+        this.etudiantClasseCollection = etudiantClasseCollection;
     }
 
     public Niveau getNiveau() {
@@ -117,12 +117,12 @@ public class Classe implements Serializable {
     }
 
     @XmlTransient
-    public List<UeClasse> getUeClasseList() {
-        return ueClasseList;
+    public Collection<UeClasse> getUeClasseCollection() {
+        return ueClasseCollection;
     }
 
-    public void setUeClasseList(List<UeClasse> ueClasseList) {
-        this.ueClasseList = ueClasseList;
+    public void setUeClasseCollection(Collection<UeClasse> ueClasseCollection) {
+        this.ueClasseCollection = ueClasseCollection;
     }
 
     @Override

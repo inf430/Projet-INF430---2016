@@ -216,4 +216,18 @@ public class AdminDao {
        
    }
 
+   public boolean addExam(String dateprevue,String type){
+       Examen exam = new Examen();
+       exam.setDateExam(dateprevue);
+       exam.setTypeExam(type);
+       
+       try{
+           em.persist(exam);
+           em.flush();
+           return true;
+       }catch(Exception e){
+           return false;
+       }
+   }
+   
 }

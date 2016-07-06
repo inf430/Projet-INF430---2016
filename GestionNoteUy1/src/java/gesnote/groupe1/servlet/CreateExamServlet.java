@@ -1,5 +1,5 @@
 /**
- * 
+ * @author groupe1
  */
 package gesnote.groupe1.servlet;
 
@@ -20,12 +20,9 @@ import org.json.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-/**
- *
- * @author Paulostar
- */
-@WebServlet(urlPatterns = {"/createadministratif"})
-public class CreateAdministratifServlet extends HttpServlet {
+
+@WebServlet(urlPatterns = {"/createexam"})
+public class CreateExamServlet extends HttpServlet {
 
     @EJB
     AdminDao dao = new AdminDao();
@@ -40,7 +37,7 @@ public class CreateAdministratifServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-        this.getServletContext().getRequestDispatcher("/WEB-INF/groupe1/nouvel_administratif.jsp").forward(request,response);
+        this.getServletContext().getRequestDispatcher("/WEB-INF/groupe1/nouvel_examen.jsp").forward(request,response);
     }
 
     /**
@@ -56,14 +53,8 @@ public class CreateAdministratifServlet extends HttpServlet {
         JSONParser parser = new JSONParser();
         JSONObject objetjson;
         JSONArray parametres;
-        String login;
-        String password;
-        String nom;
-        String prenom;
-        String datenaiss;
-        String lieunaiss;
-        String sexe;
-        String numtel;
+        String type;
+        String dateexam;
         try {
             Object object = parser.parse(request.getParameter("params"));
             objetjson = dao.objectToJSONObject(object);
@@ -71,28 +62,16 @@ public class CreateAdministratifServlet extends HttpServlet {
                 parametres = dao.objectToJSONArray(object);
                 JSONObject jsonobject = (JSONObject) parametres.get(0);
                 JSONObject params = (JSONObject)jsonobject.getJSONObject("params");
-                password = dao.getMD5(params.getString("password"));
-                login = params.getString("login");
-                nom = params.getString("nom");
-                prenom = params.getString("prenom");
-                datenaiss = params.getString("datenaiss");
-                lieunaiss = params.getString("lieunaiss");
-                sexe = params.getString("sexe");
-                numtel = params.getString("numtel");
+                type = params.getString("type");
+                dateexam = params.getString("dateexam");
             } else {
                 JSONObject params = (JSONObject)objetjson.getJSONObject("params");
-                password = dao.getMD5(params.getString("password"));
-                login = params.getString("login");
-                nom = params.getString("nom");
-                prenom = params.getString("prenom");
-                datenaiss = params.getString("datenaiss");
-                lieunaiss = params.getString("lieunaiss");
-                sexe = params.getString("sexe");
-                numtel = params.getString("numtel");
+                type = params.getString("type");
+                dateexam = params.getString("dateexam");
             }
             
             JSONObject jsonobject = new JSONObject();
-            jsonobject.put("resultat",dao.addAdministratif(nom, prenom, datenaiss, lieunaiss, sexe, login, password, numtel)?1:0);
+            jsonobject.put("resultat",dao.addExam(dateexam, type)?1:0);
             PrintWriter writer = response.getWriter();
             writer.write(jsonobject.toString());
             
@@ -101,4 +80,5 @@ public class CreateAdministratifServlet extends HttpServlet {
         }
         
     }
+
 }

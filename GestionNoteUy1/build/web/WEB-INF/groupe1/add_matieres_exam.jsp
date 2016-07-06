@@ -1,7 +1,5 @@
 <%-- 
-    Document   : add_matieres_exam
-    Created on : 4 juil. 2016, 06:30:04
-    Author     : LOLITA CHEKEM
+  @author groupe1
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -13,8 +11,11 @@
     </head>
     <body>
       <form method="get">
-        <p><label for="code">Code de la matière</label> : <input type="text" name="code" id="code"></p>
-	<p><label for="examens">Cochez les examens</label> : <select name="examens" id="examens"></select></p>
+        <label for="code">Code de la matière</label> : <input type="text" name="code" id="code">
+	<label for="examens">Cochez les examens</label>
+        <select multiple="multiple" name="examens" id="examens">
+            
+        </select>
         <input type="button" value="Annuler" />
         <input type="submit" value="Valider" />
       </form>

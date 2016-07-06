@@ -6,7 +6,7 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -52,12 +52,12 @@ public class Droit implements Serializable {
         @JoinColumn(name = "iddroit", referencedColumnName = "iddroit")}, inverseJoinColumns = {
         @JoinColumn(name = "idrole", referencedColumnName = "idrole")})
     @ManyToMany
-    private List<Role> roleList;
+    private Collection<Role> roleCollection;
     @JoinColumn(name = "idadmin", referencedColumnName = "idadmin")
     @ManyToOne(optional = false)
-    private Admin idadmin;
+    private Administrateur idadmin;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "iddroit")
-    private List<EtablirDroit> etablirDroitList;
+    private Collection<EtablirDroit> etablirDroitCollection;
 
     public Droit() {
     }
@@ -83,29 +83,29 @@ public class Droit implements Serializable {
     }
 
     @XmlTransient
-    public List<Role> getRoleList() {
-        return roleList;
+    public Collection<Role> getRoleCollection() {
+        return roleCollection;
     }
 
-    public void setRoleList(List<Role> roleList) {
-        this.roleList = roleList;
+    public void setRoleCollection(Collection<Role> roleCollection) {
+        this.roleCollection = roleCollection;
     }
 
-    public Admin getIdadmin() {
+    public Administrateur getIdadmin() {
         return idadmin;
     }
 
-    public void setIdadmin(Admin idadmin) {
+    public void setIdadmin(Administrateur idadmin) {
         this.idadmin = idadmin;
     }
 
     @XmlTransient
-    public List<EtablirDroit> getEtablirDroitList() {
-        return etablirDroitList;
+    public Collection<EtablirDroit> getEtablirDroitCollection() {
+        return etablirDroitCollection;
     }
 
-    public void setEtablirDroitList(List<EtablirDroit> etablirDroitList) {
-        this.etablirDroitList = etablirDroitList;
+    public void setEtablirDroitCollection(Collection<EtablirDroit> etablirDroitCollection) {
+        this.etablirDroitCollection = etablirDroitCollection;
     }
 
     @Override
