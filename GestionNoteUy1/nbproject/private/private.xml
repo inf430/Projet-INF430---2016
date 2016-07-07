@@ -3,9 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Paulostar/Documents/NetBeansProjects/Projet-INF430---2016/GestionNoteUy1/web/WEB-INF/groupe1/add_matieres_exam.jsp</file>
-            <file>file:/C:/Users/Paulostar/Documents/NetBeansProjects/Projet-INF430---2016/GestionNoteUy1/src/java/gesnote/groupe1/servlet/CreateAdministratifServlet.java</file>
+            <file>file:/C:/Users/Paulostar/Documents/NetBeansProjects/Projet-INF430---2016/GestionNoteUy1/web/index.jsp</file>
             <file>file:/C:/Users/Paulostar/Documents/NetBeansProjects/Projet-INF430---2016/GestionNoteUy1/src/java/gesnote/groupe1/modeles/AdminDao.java</file>
+            <file>file:/C:/Users/Paulostar/Documents/NetBeansProjects/Projet-INF430---2016/GestionNoteUy1/src/java/gesnote/groupe1/servlet/CreateAdministratifServlet.java</file>
+            <file>file:/C:/Users/Paulostar/Documents/NetBeansProjects/Projet-INF430---2016/GestionNoteUy1/web/assets/js/connexion.js</file>
+            <file>file:/C:/Users/Paulostar/Documents/NetBeansProjects/Projet-INF430---2016/GestionNoteUy1/src/java/gesnote/groupe1/servlet/ConnectServlet.java</file>
+            <file>file:/C:/Users/Paulostar/Documents/NetBeansProjects/Projet-INF430---2016/GestionNoteUy1/web/WEB-INF/glassfish-resources.xml</file>
         </group>
     </open-files>
 </project-private>

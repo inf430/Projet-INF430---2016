@@ -6,42 +6,50 @@
  * @author  groupe1
  */
 
-var expressionReguliereNumero = /^[0-9][0-9]+$/;
-var expressionReguliereDate = /[0-9][0-9]\-[0-9][0-9]\-[0-9][0-9][0-9][0-9]/;
 
 $(document).ready(function () {
-    $("#datenaiss").on("keyup", function () {
-        if (expressionReguliereDate.test($("#datenaiss").val())) {
-            $("#datenaiss").parent().removeClass("alert-danger");
-            $("#valider").removeAttr("disabled");
-        } else {
-            $("#datenaiss").parent().addClass("alert-danger");
-            $("#valider").attr("disabled", "");
-        }
-    });
-
-    $("#numtel").on("keyup", function () {
-        if (expressionReguliereNumero.test($("#numtel").val())) {
-            $("#numtel").parent().removeClass("alert-danger");
-            $("#valider").removeAttr("disabled");
-        } else {
-            $("#numtel").parent().addClass("alert-danger");
-            $("#valider").attr("disabled", "");
+    var listeMatieres = {
+        objet : 'matiere'
+    };
+    
+    var listeExamens = {
+        objet : 'examen'
+    };
+    
+    $.ajax({
+        url : 'listing',
+        type: 'post',
+        data : "params="+JSON.stringify({params:listeMatieres}),
+        dataType : 'JSON',
+        success : function(data){
+            $.each( data, function(key , val){
+                $("#code").append('<option value="'+ val.code +'">'+ val.libelle + '</option>');
+            });
+        },
+        error : function(){
+            
         }
     });
     
+    $.ajax({
+       url : 'listing',
+       type : 'post',
+       data : "params="+JSON.stringify({params:listeExamens}),
+       dataType : "JSON",
+       success : function(data){
+           $.each( data , function(key , val){
+              $("#examens").append('<option value="' + val.code + '">' + val.type + '</option>' ); 
+           });
+       },
+       error : function(){
+           alert("erreur lors de l'envoi de la requête, possibilité de passivité du serveur");
+       }
+    });
+   
     $("#valider").on("click",function(e){
        e.preventDefault();
        var params = {
-         matricule: $("#matricule").val(),
-         nom : $("#nom").val(),
-         prenom : $("#prenom").val(),
-         datenaiss : $("#datenaiss").val(),
-         lieunaiss : $("#lieunaiss").val(),
-         sexe : $("#sexe").val(),
-         grade : $("#grade").val(),
-         specialite : $("#specialite").val(),
-         numtel : $("#numtel").val()
+         
        };
        
        $.ajax({

@@ -38,7 +38,55 @@ public class ConnectServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        JSONParser parser = new JSONParser();
+        JSONObject objetjson;
+        JSONArray parametres;
+        String login = null;
+        String password = null;
+        try {
+            Object object = parser.parse(request.getParameter("params"));
+            objetjson = dao.objectToJSONObject(object);
+            if (objetjson == null) {
+                parametres = dao.objectToJSONArray(object);
+                JSONObject jsonobject = (JSONObject) parametres.get(0);
+                JSONObject params = (JSONObject) jsonobject.getJSONObject("params");
+                login = (String) params.getString("login");
+                password = dao.getMD5((String) params.getString("password"));
+            } else {
+                JSONObject params = (JSONObject) objetjson.getJSONObject("params");
+                login = (String) params.getString("login");
+                password = dao.getMD5((String) params.getString("password"));
+            }
+        } catch (ParseException | JSONException ex) {
+            Logger.getLogger(ConnectServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (!dao.exist(login, password)) {
+            PrintWriter writer = response.getWriter();
+            JSONObject jsonobject = new JSONObject();
+            try {
+                jsonobject.put("reponse", "login ou password incorrect");
+            } catch (JSONException ex) {
+                Logger.getLogger(ConnectServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            writer.write(jsonobject.toString());
+        } else {
+            HttpSession session = request.getSession();
+            System.out.print("nous sommes dans la méthode Get");
+            if (dao.isAdmin(login, password)) {
+                Administrateur admin = dao.getAdmin(login, password);
+                session.setAttribute("login", admin.getLogin());
+                session.setAttribute("password", admin.getPassword());
+                session.setAttribute("id", admin.getIdadmin());
+                this.getServletContext().getRequestDispatcher("/WEB-INF/Acceuil_admin.jsp").forward(request,response);
+            } else {
+                Personne personne = dao.getPersonne(login, password);
+                session.setAttribute("login", personne.getLogin());
+                session.setAttribute("id", personne.getIdpersonne());
+                session.setAttribute("type", personne.getStatut());
+                this.getServletContext().getRequestDispatcher("/WEB-INF/Accueil.jsp").forward(request,response);
+            }
 
+        }
     }
 
     /**
@@ -62,11 +110,11 @@ public class ConnectServlet extends HttpServlet {
             if (objetjson == null) {
                 parametres = dao.objectToJSONArray(object);
                 JSONObject jsonobject = (JSONObject) parametres.get(0);
-                JSONObject params = (JSONObject)jsonobject.getJSONObject("params");
+                JSONObject params = (JSONObject) jsonobject.getJSONObject("params");
                 login = (String) params.getString("login");
                 password = dao.getMD5((String) params.getString("password"));
             } else {
-                JSONObject params = (JSONObject)objetjson.getJSONObject("params");
+                JSONObject params = (JSONObject) objetjson.getJSONObject("params");
                 login = (String) params.getString("login");
                 password = dao.getMD5((String) params.getString("password"));
             }
@@ -83,12 +131,22 @@ public class ConnectServlet extends HttpServlet {
             }
             writer.write(jsonobject.toString());
         } else {
+            System.out.print("C\'est du post mec");
             HttpSession session = request.getSession();
-            Personne personne = dao.getPersonne(login, password);
-            session.setAttribute("login", personne.getLogin());
-            session.setAttribute("id", personne.getIdpersonne());
-            session.setAttribute("type", personne.getStatut());
-            response.sendRedirect(request.getContextPath() + "Accueil.jsp");
+            if (dao.isAdmin(login, password)) {
+                Administrateur admin = dao.getAdmin(login, password);
+                session.setAttribute("login", admin.getLogin());
+                session.setAttribute("password", admin.getPassword());
+                session.setAttribute("id", admin.getIdadmin());
+                this.getServletContext().getRequestDispatcher("/WEB-INF/Accueil_admin.jsp").forward(request,response);
+            } else {
+                Personne personne = dao.getPersonne(login, password);
+                session.setAttribute("login", personne.getLogin());
+                session.setAttribute("id", personne.getIdpersonne());
+                session.setAttribute("type", personne.getStatut());
+                this.getServletContext().getRequestDispatcher("/WEB-INF/Accueil.jsp").forward(request,response);
+            }
+
         }
     }
 

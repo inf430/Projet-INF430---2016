@@ -95,7 +95,7 @@ public class CreateStudentServlet extends HttpServlet {
             }
             
             JSONObject jsonobject = new JSONObject();
-            jsonobject.put("resultat",dao.addStudent(matricule, nom, prenom, datenaiss, lieunaiss, sexe, login, sexe, numtel)?1:0);
+            jsonobject.put("resultat",dao.addStudent(matricule, nom, prenom, datenaiss, lieunaiss, sexe, login, password, numtel)?1:0);
             
             PrintWriter writer = response.getWriter();
             writer.write(jsonobject.toString());

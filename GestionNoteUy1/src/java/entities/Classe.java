@@ -43,7 +43,7 @@ public class Classe implements Serializable {
     @Basic(optional = false)
     @Column(name = "idclasse")
     private Integer idclasse;
-    @Size(max = 50)
+    @Size(max = 255)
     @Column(name = "nom")
     private String nom;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idclasse")

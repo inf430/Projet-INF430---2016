@@ -42,10 +42,10 @@ public class Administrateur implements Serializable {
     @Basic(optional = false)
     @Column(name = "idadmin")
     private Integer idadmin;
-    @Size(max = 50)
+    @Size(max = 255)
     @Column(name = "login")
     private String login;
-    @Size(max = 50)
+    @Size(max = 255)
     @Column(name = "password")
     private String password;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idadmin")

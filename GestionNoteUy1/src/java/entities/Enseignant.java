@@ -44,13 +44,13 @@ public class Enseignant implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 10)
+    @Size(min = 1, max = 255)
     @Column(name = "matricule")
     private String matricule;
-    @Size(max = 50)
+    @Size(max = 255)
     @Column(name = "grade")
     private String grade;
-    @Size(max = 50)
+    @Size(max = 255)
     @Column(name = "specialite")
     private String specialite;
     @JoinTable(name = "roleenseignant", joinColumns = {

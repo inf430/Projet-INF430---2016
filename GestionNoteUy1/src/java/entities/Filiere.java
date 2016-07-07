@@ -44,10 +44,10 @@ public class Filiere implements Serializable {
     @Basic(optional = false)
     @Column(name = "idfiliere")
     private Integer idfiliere;
-    @Size(max = 30)
+    @Size(max = 255)
     @Column(name = "code")
     private String code;
-    @Size(max = 30)
+    @Size(max = 255)
     @Column(name = "libelle")
     private String libelle;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idfiliere")

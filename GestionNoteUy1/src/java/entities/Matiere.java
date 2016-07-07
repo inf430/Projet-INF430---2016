@@ -42,10 +42,10 @@ public class Matiere implements Serializable {
     @Basic(optional = false)
     @Column(name = "idmatiere")
     private Integer idmatiere;
-    @Size(max = 30)
+    @Size(max = 255)
     @Column(name = "code")
     private String code;
-    @Size(max = 50)
+    @Size(max = 255)
     @Column(name = "libelle")
     private String libelle;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmatiere")

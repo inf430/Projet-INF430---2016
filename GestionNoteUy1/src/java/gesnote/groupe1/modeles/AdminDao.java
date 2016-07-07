@@ -20,7 +20,7 @@ import org.json.JSONTokener;
 
 /**
  *
- * @author HP
+ * @author groupe1
  */
 @Stateless
 public class AdminDao {
@@ -32,6 +32,7 @@ public class AdminDao {
 
         //Attention : l'orthographe de la table est celui de l'entitié Personne (qui se trouve dans le paquage entities)
         String sql = "SELECT u FROM Personne u where u.login =:login AND u.password =:password";
+        String sql1 = "SELECT a FROM Administrateur a WHERE a.login =:login AND a.password =:password";
 
         Query requete = em.createQuery(sql);
         requete.setParameter("login", login);
@@ -42,11 +43,36 @@ public class AdminDao {
             p = (Personne) requete.getSingleResult();
             return true;
         } catch (NoResultException e) {
-            //e.printStackTrace();
+            Query requete1 = em.createQuery(sql1);
+            requete1.setParameter("login",login);
+            requete1.setParameter("password",password);
+            Administrateur admin = null;
+            try{
+                admin = (Administrateur) requete1.getSingleResult();
+                return true;
+            }catch( NoResultException ex){
+                
+            }
+            
         }
         return false;
     }
 
+    public boolean isAdmin(String login, String password) {
+        String sql = "SELECT a FROM Administrateur a WHERE a.login =:login AND a.password =:password";
+        Query requete1 = em.createQuery(sql);
+        requete1.setParameter("login",login);
+        requete1.setParameter("password",password);
+        Administrateur admin = null;
+        try {
+            admin = (Administrateur) requete1.getSingleResult();
+            return true;
+        } catch (NoResultException ex) {
+
+        }
+        return false;
+    }
+    
     public Personne getPersonne(String login, String password) {
 
         //Attention : l'orthographe de la table est celui de l'entitié Personne (qui se trouve dans le paquage entities)
@@ -61,6 +87,22 @@ public class AdminDao {
         } catch (NoResultException exception) {
         }
         return personne;
+    }
+    
+    public Administrateur getAdmin(String login, String password) {
+
+        //Attention : l'orthographe de la table est celui de l'entitié Personne (qui se trouve dans le paquage entities)
+        String sql = "SELECT a FROM Admin a where a.login =:login AND  a.password =:password";
+
+        Query requete = em.createQuery(sql);
+        requete.setParameter("login", login);
+        requete.setParameter("password", password);
+        Administrateur admin = null;
+        try {
+            admin = (Administrateur) requete.getSingleResult();
+        } catch (NoResultException exception) {
+        }
+        return admin;
     }
 
     public String getMD5(String input) {
@@ -137,31 +179,32 @@ public class AdminDao {
         return  true;
     }
     
-   public boolean addStudent(String matricule,String nom,String prenom,String dateNaiss,String lieuNaiss,String sexe,String login,String pass,String numTel){
+   public boolean addStudent(String matricule,String nom,String prenom,String dateNaiss,String lieuNaiss,String sexe,String login,String password,String numTel){
        Etudiant student = new Etudiant();
        Personne person = new Personne();
        
         person.setLieunaiss(lieuNaiss);
         person.setDatenaiss(dateNaiss);
         person.setLogin(login);
-        person.setPassword(pass);
+        person.setPassword(password);
         person.setNom(nom);
         person.setPrenom(prenom);
         person.setSexe(sexe.charAt(0));
         person.setNumtel(numTel);
         person.setStatut("etudiant");
-         student.setMatricule(matricule);
+        student.setMatricule(matricule);
         student.setIdpersonne(person);
         person.setEtudiant(student);
         
         try{
-            em.persist(student);
             em.persist(person);
+            em.persist(student);
             em.flush();
             return true;
         }catch(Exception e){
+            e.printStackTrace();
             return false;
-          }
+        }
         
    }
    

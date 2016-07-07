@@ -1,0 +1,12 @@
+Salut les gars
+  Désolé d'avoir ajouté les package de JSON localement dans le projet sans les y copier
+  directement.
+  Dans ce commit j'ai mit en racine du projet les différents jar concernés.
+  Pour résoudre ces warning:
+     - faire un clic droit sur votre projet dans Netbeans
+	 - aller à l'option resolve problems
+	 - à chaque fois , choisir un jar et cliquer sur resolve
+	 - localiser le jar en question sur votre disque dûr
+	     
+		  Encore désolé, bonne continuation!
+		  by Paulostar!

@@ -48,30 +48,30 @@ public class Personne implements Serializable {
     @Basic(optional = false)
     @Column(name = "idpersonne")
     private Integer idpersonne;
-    @Size(max = 50)
+    @Size(max = 255)
     @Column(name = "nom")
     private String nom;
-    @Size(max = 50)
+    @Size(max = 255)
     @Column(name = "prenom")
     private String prenom;
-    @Size(max = 10)
+    @Size(max = 255)
     @Column(name = "datenaiss")
     private String datenaiss;
-    @Size(max = 30)
+    @Size(max = 255)
     @Column(name = "lieunaiss")
     private String lieunaiss;
     @Column(name = "sexe")
     private Character sexe;
-    @Size(max = 30)
+    @Size(max = 255)
     @Column(name = "login")
     private String login;
-    @Size(max = 30)
+    @Size(max = 255)
     @Column(name = "password")
     private String password;
-    @Size(max = 15)
+    @Size(max = 255)
     @Column(name = "statut")
     private String statut;
-    @Size(max = 20)
+    @Size(max = 255)
     @Column(name = "numtel")
     private String numtel;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "idpersonne")

@@ -14,7 +14,7 @@ $(document).ready(function(){
       };
       $.ajax({
             url:'connexion',
-            type:'Post',
+            type:'Get',
             data:"params="+JSON.stringify({params:params}),
             dataType:'json',
             success: function(data){

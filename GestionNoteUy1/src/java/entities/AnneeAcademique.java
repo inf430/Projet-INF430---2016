@@ -38,7 +38,7 @@ public class AnneeAcademique implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 10)
+    @Size(min = 1, max = 255)
     @Column(name = "annee")
     private String annee;
     @Size(max = 30)

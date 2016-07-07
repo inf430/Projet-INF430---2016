@@ -42,10 +42,10 @@ public class Departement implements Serializable {
     @Basic(optional = false)
     @Column(name = "iddepartement")
     private Integer iddepartement;
-    @Size(max = 30)
+    @Size(max = 255)
     @Column(name = "code")
     private String code;
-    @Size(max = 30)
+    @Size(max = 255)
     @Column(name = "libelle")
     private String libelle;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "iddepartement")

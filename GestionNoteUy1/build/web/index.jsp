@@ -46,7 +46,7 @@
                             <img src="assets/img/logo_lycee.jpg" class="img-circle" width="50" alt="logo"/>
                         </div>
                         <h2>Connectez vous a <strong>SYGENUY1</strong></h2>
-                        <form class="form-horizontal" method="post">
+                        <form class="form-horizontal" methode="get">
                             <fieldset>
                                 <div class="input-prepend" title="Username">
                                     <span class="add-on"><i class="halflings-icon user"></i></span>

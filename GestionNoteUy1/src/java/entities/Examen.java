@@ -42,10 +42,10 @@ public class Examen implements Serializable {
     @Basic(optional = false)
     @Column(name = "idexamen")
     private Integer idexamen;
-    @Size(max = 10)
+    @Size(max = 255)
     @Column(name = "date_exam")
     private String dateExam;
-    @Size(max = 30)
+    @Size(max = 255)
     @Column(name = "type_exam")
     private String typeExam;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idexamen")

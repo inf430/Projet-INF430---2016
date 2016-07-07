@@ -28,7 +28,7 @@ import org.json.simple.parser.ParseException;
 public class CreateAdministratifServlet extends HttpServlet {
 
     @EJB
-    AdminDao dao = new AdminDao();
+    AdminDao dao;
     
     /**
      * Handles the HTTP <code>GET</code> method.

@@ -41,7 +41,7 @@ public class Reponse implements Serializable {
     @Basic(optional = false)
     @Column(name = "idreponse")
     private Integer idreponse;
-    @Size(max = 10)
+    @Size(max = 255)
     @Column(name = "date_reponse")
     private String dateReponse;
     @Size(max = 2147483647)

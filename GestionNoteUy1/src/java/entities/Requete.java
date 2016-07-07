@@ -46,10 +46,10 @@ public class Requete implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "objet")
     private String objet;
-    @Size(max = 10)
+    @Size(max = 255)
     @Column(name = "date_requete")
     private String dateRequete;
-    @Size(max = 30)
+    @Size(max = 255)
     @Column(name = "etat")
     private String etat;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "idrequete")
