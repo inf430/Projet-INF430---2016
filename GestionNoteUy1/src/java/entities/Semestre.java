@@ -6,7 +6,7 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -50,7 +50,7 @@ public class Semestre implements Serializable {
     @ManyToOne(optional = false)
     private AnneeAcademique annee;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idsemestre")
-    private Collection<Ue> ueCollection;
+    private List<Ue> ueList;
 
     public Semestre() {
     }
@@ -84,12 +84,12 @@ public class Semestre implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Ue> getUeCollection() {
-        return ueCollection;
+    public List<Ue> getUeList() {
+        return ueList;
     }
 
-    public void setUeCollection(Collection<Ue> ueCollection) {
-        this.ueCollection = ueCollection;
+    public void setUeList(List<Ue> ueList) {
+        this.ueList = ueList;
     }
 
     @Override

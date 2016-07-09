@@ -6,7 +6,7 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -49,11 +49,11 @@ public class Departement implements Serializable {
     @Column(name = "libelle")
     private String libelle;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "iddepartement")
-    private Collection<EnseignantChefDepartement> enseignantChefDepartementCollection;
+    private List<EnseignantChefDepartement> enseignantChefDepartementList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "iddepartement")
-    private Collection<Enseignant> enseignantCollection;
+    private List<Enseignant> enseignantList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "iddepartement")
-    private Collection<Filiere> filiereCollection;
+    private List<Filiere> filiereList;
 
     public Departement() {
     }
@@ -87,30 +87,30 @@ public class Departement implements Serializable {
     }
 
     @XmlTransient
-    public Collection<EnseignantChefDepartement> getEnseignantChefDepartementCollection() {
-        return enseignantChefDepartementCollection;
+    public List<EnseignantChefDepartement> getEnseignantChefDepartementList() {
+        return enseignantChefDepartementList;
     }
 
-    public void setEnseignantChefDepartementCollection(Collection<EnseignantChefDepartement> enseignantChefDepartementCollection) {
-        this.enseignantChefDepartementCollection = enseignantChefDepartementCollection;
-    }
-
-    @XmlTransient
-    public Collection<Enseignant> getEnseignantCollection() {
-        return enseignantCollection;
-    }
-
-    public void setEnseignantCollection(Collection<Enseignant> enseignantCollection) {
-        this.enseignantCollection = enseignantCollection;
+    public void setEnseignantChefDepartementList(List<EnseignantChefDepartement> enseignantChefDepartementList) {
+        this.enseignantChefDepartementList = enseignantChefDepartementList;
     }
 
     @XmlTransient
-    public Collection<Filiere> getFiliereCollection() {
-        return filiereCollection;
+    public List<Enseignant> getEnseignantList() {
+        return enseignantList;
     }
 
-    public void setFiliereCollection(Collection<Filiere> filiereCollection) {
-        this.filiereCollection = filiereCollection;
+    public void setEnseignantList(List<Enseignant> enseignantList) {
+        this.enseignantList = enseignantList;
+    }
+
+    @XmlTransient
+    public List<Filiere> getFiliereList() {
+        return filiereList;
+    }
+
+    public void setFiliereList(List<Filiere> filiereList) {
+        this.filiereList = filiereList;
     }
 
     @Override

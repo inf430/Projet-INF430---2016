@@ -64,7 +64,7 @@ public class Personne implements Serializable {
     @Size(max = 30)
     @Column(name = "login")
     private String login;
-    @Size(max = 30)
+    @Size(max = 255)
     @Column(name = "password")
     private String password;
     @Size(max = 15)
