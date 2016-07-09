@@ -6,7 +6,7 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -47,12 +47,12 @@ public class Ue implements Serializable {
     @Column(name = "libelle")
     private String libelle;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "code")
-    private Collection<MatiereUe> matiereUeCollection;
+    private List<MatiereUe> matiereUeList;
     @JoinColumn(name = "idsemestre", referencedColumnName = "idsemestre")
     @ManyToOne(optional = false)
     private Semestre idsemestre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "code")
-    private Collection<UeClasse> ueClasseCollection;
+    private List<UeClasse> ueClasseList;
 
     public Ue() {
     }
@@ -78,12 +78,12 @@ public class Ue implements Serializable {
     }
 
     @XmlTransient
-    public Collection<MatiereUe> getMatiereUeCollection() {
-        return matiereUeCollection;
+    public List<MatiereUe> getMatiereUeList() {
+        return matiereUeList;
     }
 
-    public void setMatiereUeCollection(Collection<MatiereUe> matiereUeCollection) {
-        this.matiereUeCollection = matiereUeCollection;
+    public void setMatiereUeList(List<MatiereUe> matiereUeList) {
+        this.matiereUeList = matiereUeList;
     }
 
     public Semestre getIdsemestre() {
@@ -95,12 +95,12 @@ public class Ue implements Serializable {
     }
 
     @XmlTransient
-    public Collection<UeClasse> getUeClasseCollection() {
-        return ueClasseCollection;
+    public List<UeClasse> getUeClasseList() {
+        return ueClasseList;
     }
 
-    public void setUeClasseCollection(Collection<UeClasse> ueClasseCollection) {
-        this.ueClasseCollection = ueClasseCollection;
+    public void setUeClasseList(List<UeClasse> ueClasseList) {
+        this.ueClasseList = ueClasseList;
     }
 
     @Override

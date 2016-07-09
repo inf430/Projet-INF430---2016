@@ -6,7 +6,7 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -49,9 +49,9 @@ public class Examen implements Serializable {
     @Column(name = "type_exam")
     private String typeExam;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idexamen")
-    private Collection<EtudiantExam> etudiantExamCollection;
+    private List<EtudiantExam> etudiantExamList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idexamen")
-    private Collection<MatiereExam> matiereExamCollection;
+    private List<MatiereExam> matiereExamList;
 
     public Examen() {
     }
@@ -85,21 +85,21 @@ public class Examen implements Serializable {
     }
 
     @XmlTransient
-    public Collection<EtudiantExam> getEtudiantExamCollection() {
-        return etudiantExamCollection;
+    public List<EtudiantExam> getEtudiantExamList() {
+        return etudiantExamList;
     }
 
-    public void setEtudiantExamCollection(Collection<EtudiantExam> etudiantExamCollection) {
-        this.etudiantExamCollection = etudiantExamCollection;
+    public void setEtudiantExamList(List<EtudiantExam> etudiantExamList) {
+        this.etudiantExamList = etudiantExamList;
     }
 
     @XmlTransient
-    public Collection<MatiereExam> getMatiereExamCollection() {
-        return matiereExamCollection;
+    public List<MatiereExam> getMatiereExamList() {
+        return matiereExamList;
     }
 
-    public void setMatiereExamCollection(Collection<MatiereExam> matiereExamCollection) {
-        this.matiereExamCollection = matiereExamCollection;
+    public void setMatiereExamList(List<MatiereExam> matiereExamList) {
+        this.matiereExamList = matiereExamList;
     }
 
     @Override

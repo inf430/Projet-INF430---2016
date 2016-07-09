@@ -6,7 +6,7 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -49,9 +49,9 @@ public class Administrateur implements Serializable {
     @Column(name = "password")
     private String password;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idadmin")
-    private Collection<Droit> droitCollection;
+    private List<Droit> droitList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idadmin")
-    private Collection<Role> roleCollection;
+    private List<Role> roleList;
 
     public Administrateur() {
     }
@@ -85,21 +85,21 @@ public class Administrateur implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Droit> getDroitCollection() {
-        return droitCollection;
+    public List<Droit> getDroitList() {
+        return droitList;
     }
 
-    public void setDroitCollection(Collection<Droit> droitCollection) {
-        this.droitCollection = droitCollection;
+    public void setDroitList(List<Droit> droitList) {
+        this.droitList = droitList;
     }
 
     @XmlTransient
-    public Collection<Role> getRoleCollection() {
-        return roleCollection;
+    public List<Role> getRoleList() {
+        return roleList;
     }
 
-    public void setRoleCollection(Collection<Role> roleCollection) {
-        this.roleCollection = roleCollection;
+    public void setRoleList(List<Role> roleList) {
+        this.roleList = roleList;
     }
 
     @Override

@@ -34,7 +34,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Requete.findByIdrequete", query = "SELECT r FROM Requete r WHERE r.idrequete = :idrequete"),
     @NamedQuery(name = "Requete.findByObjet", query = "SELECT r FROM Requete r WHERE r.objet = :objet"),
     @NamedQuery(name = "Requete.findByDateRequete", query = "SELECT r FROM Requete r WHERE r.dateRequete = :dateRequete"),
-    @NamedQuery(name = "Requete.findByEtat", query = "SELECT r FROM Requete r WHERE r.etat = :etat")})
+    @NamedQuery(name = "Requete.findByEtat", query = "SELECT r FROM Requete r WHERE r.etat = :etat"),
+    @NamedQuery(name = "Requete.findByContenu", query = "SELECT r FROM Requete r WHERE r.contenu = :contenu"),
+    @NamedQuery(name = "Requete.findByTyperequete", query = "SELECT r FROM Requete r WHERE r.typerequete = :typerequete")})
 public class Requete implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -52,8 +54,17 @@ public class Requete implements Serializable {
     @Size(max = 255)
     @Column(name = "etat")
     private String etat;
+    @Size(max = 2147483647)
+    @Column(name = "contenu")
+    private String contenu;
+    @Size(max = 30)
+    @Column(name = "typerequete")
+    private String typerequete;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "idrequete")
     private Reponse reponse;
+    @JoinColumn(name = "idmatiere", referencedColumnName = "idmatiere")
+    @ManyToOne
+    private Matiere idmatiere;
     @JoinColumn(name = "matricule", referencedColumnName = "matricule")
     @ManyToOne(optional = false)
     private Etudiant matricule;
@@ -97,12 +108,36 @@ public class Requete implements Serializable {
         this.etat = etat;
     }
 
+    public String getContenu() {
+        return contenu;
+    }
+
+    public void setContenu(String contenu) {
+        this.contenu = contenu;
+    }
+
+    public String getTyperequete() {
+        return typerequete;
+    }
+
+    public void setTyperequete(String typerequete) {
+        this.typerequete = typerequete;
+    }
+
     public Reponse getReponse() {
         return reponse;
     }
 
     public void setReponse(Reponse reponse) {
         this.reponse = reponse;
+    }
+
+    public Matiere getIdmatiere() {
+        return idmatiere;
+    }
+
+    public void setIdmatiere(Matiere idmatiere) {
+        this.idmatiere = idmatiere;
     }
 
     public Etudiant getMatricule() {
