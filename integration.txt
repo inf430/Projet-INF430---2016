@@ -1,7 +1,7 @@
 Intégration du projet dans vos environnements:
 
 ---Créer une base de données dans PostgreSQL (avec pgAdmin ou par commande on s'enfout) nommées : gesnote
----Exécuter le script db.sql (en ligne de commande ou avec pgAdmin) : il contient à la fois les tables et les données de certaines tables 
+---Exécuter le script gesnote2.sql (en ligne de commande ou avec pgAdmin) : il contient uniquement les tables 
 ---Copier le projet (GestionNoteUy1) dans votre workspace
 ---Ouvrir NetBeans et dans le menu fichier, ouvrir le projet. En principe NetBeans doit directement le reconnaitre comme une Java Web Application
 ---Ouvrir le fichier : glassfish-resources.xml et modifier le password par le mot de passe de votre BD
