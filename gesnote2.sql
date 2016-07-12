@@ -593,6 +593,7 @@ CREATE TABLE matiere_exam (
     idmatiereexam integer NOT NULL,
     idmatiere integer NOT NULL,
     idexamen integer NOT NULL,
+	pourcentage float,
     annee character varying(10) NOT NULL
 );
 
