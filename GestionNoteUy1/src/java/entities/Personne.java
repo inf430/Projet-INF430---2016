@@ -13,7 +13,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -48,30 +47,30 @@ public class Personne implements Serializable {
     @Basic(optional = false)
     @Column(name = "idpersonne")
     private Integer idpersonne;
-    @Size(max = 255)
+    @Size(max = 50)
     @Column(name = "nom")
     private String nom;
-    @Size(max = 255)
+    @Size(max = 50)
     @Column(name = "prenom")
     private String prenom;
-    @Size(max = 255)
+    @Size(max = 10)
     @Column(name = "datenaiss")
     private String datenaiss;
-    @Size(max = 255)
+    @Size(max = 30)
     @Column(name = "lieunaiss")
     private String lieunaiss;
     @Column(name = "sexe")
     private Character sexe;
-    @Size(max = 255)
+    @Size(max = 30)
     @Column(name = "login")
     private String login;
     @Size(max = 255)
     @Column(name = "password")
     private String password;
-    @Size(max = 255)
+    @Size(max = 15)
     @Column(name = "statut")
     private String statut;
-    @Size(max = 255)
+    @Size(max = 20)
     @Column(name = "numtel")
     private String numtel;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "idpersonne")

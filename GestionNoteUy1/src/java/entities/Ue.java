@@ -40,10 +40,10 @@ public class Ue implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 255)
+    @Size(min = 1, max = 30)
     @Column(name = "code")
     private String code;
-    @Size(max = 255)
+    @Size(max = 30)
     @Column(name = "libelle")
     private String libelle;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "code")

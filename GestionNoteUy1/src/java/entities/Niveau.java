@@ -38,10 +38,10 @@ public class Niveau implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 255)
+    @Size(min = 1, max = 30)
     @Column(name = "niveau")
     private String niveau;
-    @Size(max = 255)
+    @Size(max = 20)
     @Column(name = "cycle")
     private String cycle;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "niveau")

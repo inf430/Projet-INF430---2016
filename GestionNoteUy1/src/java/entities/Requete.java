@@ -48,10 +48,10 @@ public class Requete implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "objet")
     private String objet;
-    @Size(max = 255)
+    @Size(max = 10)
     @Column(name = "date_requete")
     private String dateRequete;
-    @Size(max = 255)
+    @Size(max = 30)
     @Column(name = "etat")
     private String etat;
     @Size(max = 2147483647)

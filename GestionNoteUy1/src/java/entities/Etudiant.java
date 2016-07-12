@@ -41,7 +41,7 @@ public class Etudiant implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 255)
+    @Size(min = 1, max = 10)
     @Column(name = "matricule")
     private String matricule;
     @JoinTable(name = "roleetudiant", joinColumns = {

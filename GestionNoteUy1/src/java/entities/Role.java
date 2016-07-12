@@ -42,7 +42,7 @@ public class Role implements Serializable {
     @Basic(optional = false)
     @Column(name = "idrole")
     private Integer idrole;
-    @Size(max = 255)
+    @Size(max = 50)
     @Column(name = "role")
     private String role;
     @ManyToMany(mappedBy = "roleList")

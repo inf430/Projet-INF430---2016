@@ -43,7 +43,7 @@ public class Semestre implements Serializable {
     @Basic(optional = false)
     @Column(name = "idsemestre")
     private Integer idsemestre;
-    @Size(max = 255)
+    @Size(max = 30)
     @Column(name = "semestre")
     private String semestre;
     @JoinColumn(name = "annee", referencedColumnName = "annee")

@@ -6,6 +6,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,8 +17,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -28,8 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "MatiereExam.findAll", query = "SELECT m FROM MatiereExam m"),
-    @NamedQuery(name = "MatiereExam.findByIdmatiereexam", query = "SELECT m FROM MatiereExam m WHERE m.idmatiereexam = :idmatiereexam"),
-    @NamedQuery(name = "MatiereExam.findByPourcentage", query = "SELECT m FROM MatiereExam m WHERE m.pourcentage = :pourcentage")})
+    @NamedQuery(name = "MatiereExam.findByIdmatiereexam", query = "SELECT m FROM MatiereExam m WHERE m.idmatiereexam = :idmatiereexam")})
 public class MatiereExam implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -38,8 +40,8 @@ public class MatiereExam implements Serializable {
     @Basic(optional = false)
     @Column(name = "idmatiereexam")
     private Integer idmatiereexam;
-    @Column(name = "pourcentage")
-    private Integer pourcentage;
+    @OneToMany(mappedBy = "idmatiereexam")
+    private List<EtudiantExam> etudiantExamList;
     @JoinColumn(name = "idmatiere", referencedColumnName = "idmatiere")
     @ManyToOne(optional = false)
     private Matiere idmatiere;
@@ -65,12 +67,13 @@ public class MatiereExam implements Serializable {
         this.idmatiereexam = idmatiereexam;
     }
 
-    public Integer getPourcentage() {
-        return pourcentage;
+    @XmlTransient
+    public List<EtudiantExam> getEtudiantExamList() {
+        return etudiantExamList;
     }
 
-    public void setPourcentage(Integer pourcentage) {
-        this.pourcentage = pourcentage;
+    public void setEtudiantExamList(List<EtudiantExam> etudiantExamList) {
+        this.etudiantExamList = etudiantExamList;
     }
 
     public Matiere getIdmatiere() {

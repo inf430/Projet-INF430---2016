@@ -45,7 +45,7 @@ public class Droit implements Serializable {
     @Basic(optional = false)
     @Column(name = "iddroit")
     private Integer iddroit;
-    @Size(max = 255)
+    @Size(max = 50)
     @Column(name = "nom")
     private String nom;
     @JoinTable(name = "appartenirdroit", joinColumns = {

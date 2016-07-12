@@ -43,9 +43,11 @@ public class Classe implements Serializable {
     @Basic(optional = false)
     @Column(name = "idclasse")
     private Integer idclasse;
-    @Size(max = 255)
+    @Size(max = 50)
     @Column(name = "nom")
     private String nom;
+    @OneToMany(mappedBy = "idclasse")
+    private List<EnseignantMat> enseignantMatList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idclasse")
     private List<EnseignantClasseJury> enseignantClasseJuryList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idclasse")
@@ -80,6 +82,15 @@ public class Classe implements Serializable {
 
     public void setNom(String nom) {
         this.nom = nom;
+    }
+
+    @XmlTransient
+    public List<EnseignantMat> getEnseignantMatList() {
+        return enseignantMatList;
+    }
+
+    public void setEnseignantMatList(List<EnseignantMat> enseignantMatList) {
+        this.enseignantMatList = enseignantMatList;
     }
 
     @XmlTransient

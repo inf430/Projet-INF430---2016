@@ -43,6 +43,9 @@ public class EnseignantMat implements Serializable {
     @JoinColumn(name = "matricule", referencedColumnName = "matricule")
     @ManyToOne(optional = false)
     private Enseignant matricule;
+    @JoinColumn(name = "idclasse", referencedColumnName = "idclasse")
+    @ManyToOne
+    private Classe idclasse;
     @JoinColumn(name = "annee", referencedColumnName = "annee")
     @ManyToOne(optional = false)
     private AnneeAcademique annee;
@@ -76,6 +79,14 @@ public class EnseignantMat implements Serializable {
 
     public void setMatricule(Enseignant matricule) {
         this.matricule = matricule;
+    }
+
+    public Classe getIdclasse() {
+        return idclasse;
+    }
+
+    public void setIdclasse(Classe idclasse) {
+        this.idclasse = idclasse;
     }
 
     public AnneeAcademique getAnnee() {

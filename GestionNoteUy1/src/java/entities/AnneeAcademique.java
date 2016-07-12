@@ -38,7 +38,7 @@ public class AnneeAcademique implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 255)
+    @Size(min = 1, max = 10)
     @Column(name = "annee")
     private String annee;
     @Size(max = 30)
@@ -54,8 +54,6 @@ public class AnneeAcademique implements Serializable {
     private List<EnseignantChefDepartement> enseignantChefDepartementList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "annee")
     private List<EnseignantClasseJury> enseignantClasseJuryList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "annee")
-    private List<EtudiantExam> etudiantExamList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "annee")
     private List<Inscription> inscriptionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "annee")
@@ -131,15 +129,6 @@ public class AnneeAcademique implements Serializable {
 
     public void setEnseignantClasseJuryList(List<EnseignantClasseJury> enseignantClasseJuryList) {
         this.enseignantClasseJuryList = enseignantClasseJuryList;
-    }
-
-    @XmlTransient
-    public List<EtudiantExam> getEtudiantExamList() {
-        return etudiantExamList;
-    }
-
-    public void setEtudiantExamList(List<EtudiantExam> etudiantExamList) {
-        this.etudiantExamList = etudiantExamList;
     }
 
     @XmlTransient

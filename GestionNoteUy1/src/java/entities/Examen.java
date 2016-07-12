@@ -42,14 +42,12 @@ public class Examen implements Serializable {
     @Basic(optional = false)
     @Column(name = "idexamen")
     private Integer idexamen;
-    @Size(max = 255)
+    @Size(max = 10)
     @Column(name = "date_exam")
     private String dateExam;
-    @Size(max = 255)
+    @Size(max = 30)
     @Column(name = "type_exam")
     private String typeExam;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idexamen")
-    private List<EtudiantExam> etudiantExamList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idexamen")
     private List<MatiereExam> matiereExamList;
 
@@ -82,15 +80,6 @@ public class Examen implements Serializable {
 
     public void setTypeExam(String typeExam) {
         this.typeExam = typeExam;
-    }
-
-    @XmlTransient
-    public List<EtudiantExam> getEtudiantExamList() {
-        return etudiantExamList;
-    }
-
-    public void setEtudiantExamList(List<EtudiantExam> etudiantExamList) {
-        this.etudiantExamList = etudiantExamList;
     }
 
     @XmlTransient

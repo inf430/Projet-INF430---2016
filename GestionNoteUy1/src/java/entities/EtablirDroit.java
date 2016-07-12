@@ -40,10 +40,10 @@ public class EtablirDroit implements Serializable {
     @Basic(optional = false)
     @Column(name = "idetablirdroit")
     private Integer idetablirdroit;
-    @Size(max = 255)
+    @Size(max = 10)
     @Column(name = "datedeb")
     private String datedeb;
-    @Size(max = 255)
+    @Size(max = 10)
     @Column(name = "datefin")
     private String datefin;
     @JoinColumn(name = "matricule", referencedColumnName = "matricule")
