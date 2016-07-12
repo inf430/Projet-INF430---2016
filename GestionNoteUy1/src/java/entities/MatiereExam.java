@@ -31,7 +31,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "MatiereExam.findAll", query = "SELECT m FROM MatiereExam m"),
-    @NamedQuery(name = "MatiereExam.findByIdmatiereexam", query = "SELECT m FROM MatiereExam m WHERE m.idmatiereexam = :idmatiereexam")})
+    @NamedQuery(name = "MatiereExam.findByIdmatiereexam", query = "SELECT m FROM MatiereExam m WHERE m.idmatiereexam = :idmatiereexam"),
+    @NamedQuery(name = "MatiereExam.findByPourcentage", query = "SELECT m FROM MatiereExam m WHERE m.pourcentage = :pourcentage")})
 public class MatiereExam implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -40,6 +41,9 @@ public class MatiereExam implements Serializable {
     @Basic(optional = false)
     @Column(name = "idmatiereexam")
     private Integer idmatiereexam;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "pourcentage")
+    private Double pourcentage;
     @OneToMany(mappedBy = "idmatiereexam")
     private List<EtudiantExam> etudiantExamList;
     @JoinColumn(name = "idmatiere", referencedColumnName = "idmatiere")
@@ -65,6 +69,14 @@ public class MatiereExam implements Serializable {
 
     public void setIdmatiereexam(Integer idmatiereexam) {
         this.idmatiereexam = idmatiereexam;
+    }
+
+    public Double getPourcentage() {
+        return pourcentage;
+    }
+
+    public void setPourcentage(Double pourcentage) {
+        this.pourcentage = pourcentage;
     }
 
     @XmlTransient
