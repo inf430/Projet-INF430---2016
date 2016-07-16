@@ -9,14 +9,13 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -24,36 +23,39 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author HP
  */
 @Entity
-@Table(name = "administratif")
+@Table(name = "interdit")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Administratif.findAll", query = "SELECT a FROM Administratif a"),
-    @NamedQuery(name = "Administratif.findByIdadministatif", query = "SELECT a FROM Administratif a WHERE a.idadministatif = :idadministatif")})
-public class Administratif implements Serializable {
+    @NamedQuery(name = "Interdit.findAll", query = "SELECT i FROM Interdit i"),
+    @NamedQuery(name = "Interdit.findByIdinterdit", query = "SELECT i FROM Interdit i WHERE i.idinterdit = :idinterdit")})
+public class Interdit implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idadministatif")
-    private Integer idadministatif;
+    @NotNull
+    @Column(name = "idinterdit")
+    private Integer idinterdit;
     @JoinColumn(name = "idpersonne", referencedColumnName = "idpersonne")
-    @OneToOne(optional = false)
+    @ManyToOne(optional = false)
     private Personne idpersonne;
+    @JoinColumn(name = "iddroit", referencedColumnName = "iddroit")
+    @ManyToOne(optional = false)
+    private Droit iddroit;
 
-    public Administratif() {
+    public Interdit() {
     }
 
-    public Administratif(Integer idadministatif) {
-        this.idadministatif = idadministatif;
+    public Interdit(Integer idinterdit) {
+        this.idinterdit = idinterdit;
     }
 
-    public Integer getIdadministatif() {
-        return idadministatif;
+    public Integer getIdinterdit() {
+        return idinterdit;
     }
 
-    public void setIdadministatif(Integer idadministatif) {
-        this.idadministatif = idadministatif;
+    public void setIdinterdit(Integer idinterdit) {
+        this.idinterdit = idinterdit;
     }
 
     public Personne getIdpersonne() {
@@ -64,21 +66,29 @@ public class Administratif implements Serializable {
         this.idpersonne = idpersonne;
     }
 
+    public Droit getIddroit() {
+        return iddroit;
+    }
+
+    public void setIddroit(Droit iddroit) {
+        this.iddroit = iddroit;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idadministatif != null ? idadministatif.hashCode() : 0);
+        hash += (idinterdit != null ? idinterdit.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Administratif)) {
+        if (!(object instanceof Interdit)) {
             return false;
         }
-        Administratif other = (Administratif) object;
-        if ((this.idadministatif == null && other.idadministatif != null) || (this.idadministatif != null && !this.idadministatif.equals(other.idadministatif))) {
+        Interdit other = (Interdit) object;
+        if ((this.idinterdit == null && other.idinterdit != null) || (this.idinterdit != null && !this.idinterdit.equals(other.idinterdit))) {
             return false;
         }
         return true;
@@ -86,7 +96,7 @@ public class Administratif implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Administratif[ idadministatif=" + idadministatif + " ]";
+        return "entities.Interdit[ idinterdit=" + idinterdit + " ]";
     }
     
 }

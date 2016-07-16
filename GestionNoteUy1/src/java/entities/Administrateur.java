@@ -18,6 +18,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -42,14 +43,16 @@ public class Administrateur implements Serializable {
     @Basic(optional = false)
     @Column(name = "idadmin")
     private Integer idadmin;
-    @Size(max = 50)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "login")
     private String login;
-    @Size(max = 50)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 255)
     @Column(name = "password")
     private String password;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idadmin")
-    private List<Droit> droitList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idadmin")
     private List<Role> roleList;
 
@@ -58,6 +61,12 @@ public class Administrateur implements Serializable {
 
     public Administrateur(Integer idadmin) {
         this.idadmin = idadmin;
+    }
+
+    public Administrateur(Integer idadmin, String login, String password) {
+        this.idadmin = idadmin;
+        this.login = login;
+        this.password = password;
     }
 
     public Integer getIdadmin() {
@@ -82,15 +91,6 @@ public class Administrateur implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    @XmlTransient
-    public List<Droit> getDroitList() {
-        return droitList;
-    }
-
-    public void setDroitList(List<Droit> droitList) {
-        this.droitList = droitList;
     }
 
     @XmlTransient

@@ -14,10 +14,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -48,14 +44,10 @@ public class Droit implements Serializable {
     @Size(max = 50)
     @Column(name = "nom")
     private String nom;
-    @JoinTable(name = "appartenirdroit", joinColumns = {
-        @JoinColumn(name = "iddroit", referencedColumnName = "iddroit")}, inverseJoinColumns = {
-        @JoinColumn(name = "idrole", referencedColumnName = "idrole")})
-    @ManyToMany
-    private List<Role> roleList;
-    @JoinColumn(name = "idadmin", referencedColumnName = "idadmin")
-    @ManyToOne(optional = false)
-    private Administrateur idadmin;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "iddroit")
+    private List<Interdit> interditList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "iddroit")
+    private List<DroitRole> droitRoleList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "iddroit")
     private List<EtablirDroit> etablirDroitList;
 
@@ -83,20 +75,21 @@ public class Droit implements Serializable {
     }
 
     @XmlTransient
-    public List<Role> getRoleList() {
-        return roleList;
+    public List<Interdit> getInterditList() {
+        return interditList;
     }
 
-    public void setRoleList(List<Role> roleList) {
-        this.roleList = roleList;
+    public void setInterditList(List<Interdit> interditList) {
+        this.interditList = interditList;
     }
 
-    public Administrateur getIdadmin() {
-        return idadmin;
+    @XmlTransient
+    public List<DroitRole> getDroitRoleList() {
+        return droitRoleList;
     }
 
-    public void setIdadmin(Administrateur idadmin) {
-        this.idadmin = idadmin;
+    public void setDroitRoleList(List<DroitRole> droitRoleList) {
+        this.droitRoleList = droitRoleList;
     }
 
     @XmlTransient

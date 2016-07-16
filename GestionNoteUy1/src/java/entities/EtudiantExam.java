@@ -47,11 +47,11 @@ public class EtudiantExam implements Serializable {
     @Column(name = "anonymat")
     private String anonymat;
     @JoinColumn(name = "idmatiereexam", referencedColumnName = "idmatiereexam")
-    @ManyToOne
-    private MatiereExam idmatiereexam;
-    @JoinColumn(name = "matricule", referencedColumnName = "matricule")
     @ManyToOne(optional = false)
-    private Etudiant matricule;
+    private MatiereExam idmatiereexam;
+    @JoinColumn(name = "matriculeetudiant", referencedColumnName = "matriculeetudiant")
+    @ManyToOne(optional = false)
+    private Etudiant matriculeetudiant;
 
     public EtudiantExam() {
     }
@@ -92,12 +92,12 @@ public class EtudiantExam implements Serializable {
         this.idmatiereexam = idmatiereexam;
     }
 
-    public Etudiant getMatricule() {
-        return matricule;
+    public Etudiant getMatriculeetudiant() {
+        return matriculeetudiant;
     }
 
-    public void setMatricule(Etudiant matricule) {
-        this.matricule = matricule;
+    public void setMatriculeetudiant(Etudiant matriculeetudiant) {
+        this.matriculeetudiant = matriculeetudiant;
     }
 
     @Override

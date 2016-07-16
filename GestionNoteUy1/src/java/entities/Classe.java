@@ -46,10 +46,14 @@ public class Classe implements Serializable {
     @Size(max = 50)
     @Column(name = "nom")
     private String nom;
-    @OneToMany(mappedBy = "idclasse")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idclasse")
     private List<EnseignantMat> enseignantMatList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idclasse")
     private List<EnseignantClasseJury> enseignantClasseJuryList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idclasse")
+    private List<DroitRole> droitRoleList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idclasse")
+    private List<EtablirDroit> etablirDroitList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idclasse")
     private List<EtudiantClasse> etudiantClasseList;
     @JoinColumn(name = "niveau", referencedColumnName = "niveau")
@@ -60,6 +64,8 @@ public class Classe implements Serializable {
     private Filiere idfiliere;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idclasse")
     private List<UeClasse> ueClasseList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idclasse")
+    private List<Requetejury> requetejuryList;
 
     public Classe() {
     }
@@ -103,6 +109,24 @@ public class Classe implements Serializable {
     }
 
     @XmlTransient
+    public List<DroitRole> getDroitRoleList() {
+        return droitRoleList;
+    }
+
+    public void setDroitRoleList(List<DroitRole> droitRoleList) {
+        this.droitRoleList = droitRoleList;
+    }
+
+    @XmlTransient
+    public List<EtablirDroit> getEtablirDroitList() {
+        return etablirDroitList;
+    }
+
+    public void setEtablirDroitList(List<EtablirDroit> etablirDroitList) {
+        this.etablirDroitList = etablirDroitList;
+    }
+
+    @XmlTransient
     public List<EtudiantClasse> getEtudiantClasseList() {
         return etudiantClasseList;
     }
@@ -134,6 +158,15 @@ public class Classe implements Serializable {
 
     public void setUeClasseList(List<UeClasse> ueClasseList) {
         this.ueClasseList = ueClasseList;
+    }
+
+    @XmlTransient
+    public List<Requetejury> getRequetejuryList() {
+        return requetejuryList;
+    }
+
+    public void setRequetejuryList(List<Requetejury> requetejuryList) {
+        this.requetejuryList = requetejuryList;
     }
 
     @Override

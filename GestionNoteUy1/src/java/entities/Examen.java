@@ -32,8 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Examen.findAll", query = "SELECT e FROM Examen e"),
     @NamedQuery(name = "Examen.findByIdexamen", query = "SELECT e FROM Examen e WHERE e.idexamen = :idexamen"),
-    @NamedQuery(name = "Examen.findByDateExam", query = "SELECT e FROM Examen e WHERE e.dateExam = :dateExam"),
-    @NamedQuery(name = "Examen.findByTypeExam", query = "SELECT e FROM Examen e WHERE e.typeExam = :typeExam")})
+    @NamedQuery(name = "Examen.findByTypeexamen", query = "SELECT e FROM Examen e WHERE e.typeexamen = :typeexamen")})
 public class Examen implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -42,12 +41,13 @@ public class Examen implements Serializable {
     @Basic(optional = false)
     @Column(name = "idexamen")
     private Integer idexamen;
-    @Size(max = 10)
-    @Column(name = "date_exam")
-    private String dateExam;
     @Size(max = 30)
-    @Column(name = "type_exam")
-    private String typeExam;
+    @Column(name = "typeexamen")
+    private String typeexamen;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idexamen")
+    private List<DroitRole> droitRoleList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idexamen")
+    private List<EtablirDroit> etablirDroitList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idexamen")
     private List<MatiereExam> matiereExamList;
 
@@ -66,20 +66,30 @@ public class Examen implements Serializable {
         this.idexamen = idexamen;
     }
 
-    public String getDateExam() {
-        return dateExam;
+    public String getTypeexamen() {
+        return typeexamen;
     }
 
-    public void setDateExam(String dateExam) {
-        this.dateExam = dateExam;
+    public void setTypeexamen(String typeexamen) {
+        this.typeexamen = typeexamen;
     }
 
-    public String getTypeExam() {
-        return typeExam;
+    @XmlTransient
+    public List<DroitRole> getDroitRoleList() {
+        return droitRoleList;
     }
 
-    public void setTypeExam(String typeExam) {
-        this.typeExam = typeExam;
+    public void setDroitRoleList(List<DroitRole> droitRoleList) {
+        this.droitRoleList = droitRoleList;
+    }
+
+    @XmlTransient
+    public List<EtablirDroit> getEtablirDroitList() {
+        return etablirDroitList;
+    }
+
+    public void setEtablirDroitList(List<EtablirDroit> etablirDroitList) {
+        this.etablirDroitList = etablirDroitList;
     }
 
     @XmlTransient

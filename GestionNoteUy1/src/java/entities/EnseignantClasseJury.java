@@ -37,9 +37,9 @@ public class EnseignantClasseJury implements Serializable {
     @Basic(optional = false)
     @Column(name = "idenseignantclassejury")
     private Integer idenseignantclassejury;
-    @JoinColumn(name = "matricule", referencedColumnName = "matricule")
+    @JoinColumn(name = "matriculeenseignant", referencedColumnName = "matriculeenseignant")
     @ManyToOne(optional = false)
-    private Enseignant matricule;
+    private Enseignant matriculeenseignant;
     @JoinColumn(name = "idclasse", referencedColumnName = "idclasse")
     @ManyToOne(optional = false)
     private Classe idclasse;
@@ -62,12 +62,12 @@ public class EnseignantClasseJury implements Serializable {
         this.idenseignantclassejury = idenseignantclassejury;
     }
 
-    public Enseignant getMatricule() {
-        return matricule;
+    public Enseignant getMatriculeenseignant() {
+        return matriculeenseignant;
     }
 
-    public void setMatricule(Enseignant matricule) {
-        this.matricule = matricule;
+    public void setMatriculeenseignant(Enseignant matriculeenseignant) {
+        this.matriculeenseignant = matriculeenseignant;
     }
 
     public Classe getIdclasse() {

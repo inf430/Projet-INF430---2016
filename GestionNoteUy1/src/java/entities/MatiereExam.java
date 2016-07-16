@@ -8,6 +8,7 @@ package entities;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,6 +20,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -32,7 +34,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "MatiereExam.findAll", query = "SELECT m FROM MatiereExam m"),
     @NamedQuery(name = "MatiereExam.findByIdmatiereexam", query = "SELECT m FROM MatiereExam m WHERE m.idmatiereexam = :idmatiereexam"),
-    @NamedQuery(name = "MatiereExam.findByPourcentage", query = "SELECT m FROM MatiereExam m WHERE m.pourcentage = :pourcentage")})
+    @NamedQuery(name = "MatiereExam.findByPourcentage", query = "SELECT m FROM MatiereExam m WHERE m.pourcentage = :pourcentage"),
+    @NamedQuery(name = "MatiereExam.findByDatematiereexam", query = "SELECT m FROM MatiereExam m WHERE m.datematiereexam = :datematiereexam")})
 public class MatiereExam implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,10 +44,12 @@ public class MatiereExam implements Serializable {
     @Basic(optional = false)
     @Column(name = "idmatiereexam")
     private Integer idmatiereexam;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "pourcentage")
-    private Double pourcentage;
-    @OneToMany(mappedBy = "idmatiereexam")
+    private Integer pourcentage;
+    @Size(max = 32)
+    @Column(name = "datematiereexam")
+    private String datematiereexam;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmatiereexam")
     private List<EtudiantExam> etudiantExamList;
     @JoinColumn(name = "idmatiere", referencedColumnName = "idmatiere")
     @ManyToOne(optional = false)
@@ -71,12 +76,20 @@ public class MatiereExam implements Serializable {
         this.idmatiereexam = idmatiereexam;
     }
 
-    public Double getPourcentage() {
+    public Integer getPourcentage() {
         return pourcentage;
     }
 
-    public void setPourcentage(Double pourcentage) {
+    public void setPourcentage(Integer pourcentage) {
         this.pourcentage = pourcentage;
+    }
+
+    public String getDatematiereexam() {
+        return datematiereexam;
+    }
+
+    public void setDatematiereexam(String datematiereexam) {
+        this.datematiereexam = datematiereexam;
     }
 
     @XmlTransient
