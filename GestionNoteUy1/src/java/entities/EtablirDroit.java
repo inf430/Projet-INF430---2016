@@ -46,15 +46,27 @@ public class EtablirDroit implements Serializable {
     @Size(max = 10)
     @Column(name = "datefin")
     private String datefin;
-    @JoinColumn(name = "matricule", referencedColumnName = "matricule")
+    @JoinColumn(name = "codeue", referencedColumnName = "codeue")
     @ManyToOne(optional = false)
-    private Enseignant matricule;
+    private Ue codeue;
+    @JoinColumn(name = "idpersonne", referencedColumnName = "idpersonne")
+    @ManyToOne(optional = false)
+    private Personne idpersonne;
+    @JoinColumn(name = "idmatiere", referencedColumnName = "idmatiere")
+    @ManyToOne(optional = false)
+    private Matiere idmatiere;
+    @JoinColumn(name = "idexamen", referencedColumnName = "idexamen")
+    @ManyToOne(optional = false)
+    private Examen idexamen;
+    @JoinColumn(name = "matriculeetudiant", referencedColumnName = "matriculeetudiant")
+    @ManyToOne(optional = false)
+    private Etudiant matriculeetudiant;
     @JoinColumn(name = "iddroit", referencedColumnName = "iddroit")
     @ManyToOne(optional = false)
     private Droit iddroit;
-    @JoinColumn(name = "idadministatif", referencedColumnName = "idadministatif")
+    @JoinColumn(name = "idclasse", referencedColumnName = "idclasse")
     @ManyToOne(optional = false)
-    private Administratif idadministatif;
+    private Classe idclasse;
 
     public EtablirDroit() {
     }
@@ -87,12 +99,44 @@ public class EtablirDroit implements Serializable {
         this.datefin = datefin;
     }
 
-    public Enseignant getMatricule() {
-        return matricule;
+    public Ue getCodeue() {
+        return codeue;
     }
 
-    public void setMatricule(Enseignant matricule) {
-        this.matricule = matricule;
+    public void setCodeue(Ue codeue) {
+        this.codeue = codeue;
+    }
+
+    public Personne getIdpersonne() {
+        return idpersonne;
+    }
+
+    public void setIdpersonne(Personne idpersonne) {
+        this.idpersonne = idpersonne;
+    }
+
+    public Matiere getIdmatiere() {
+        return idmatiere;
+    }
+
+    public void setIdmatiere(Matiere idmatiere) {
+        this.idmatiere = idmatiere;
+    }
+
+    public Examen getIdexamen() {
+        return idexamen;
+    }
+
+    public void setIdexamen(Examen idexamen) {
+        this.idexamen = idexamen;
+    }
+
+    public Etudiant getMatriculeetudiant() {
+        return matriculeetudiant;
+    }
+
+    public void setMatriculeetudiant(Etudiant matriculeetudiant) {
+        this.matriculeetudiant = matriculeetudiant;
     }
 
     public Droit getIddroit() {
@@ -103,12 +147,12 @@ public class EtablirDroit implements Serializable {
         this.iddroit = iddroit;
     }
 
-    public Administratif getIdadministatif() {
-        return idadministatif;
+    public Classe getIdclasse() {
+        return idclasse;
     }
 
-    public void setIdadministatif(Administratif idadministatif) {
-        this.idadministatif = idadministatif;
+    public void setIdclasse(Classe idclasse) {
+        this.idclasse = idclasse;
     }
 
     @Override

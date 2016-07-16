@@ -1,0 +1,22 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 7 juil. 2016, 09:53:25
+    Author     : fritz
+*/
+th, td { white-space: nowrap; }
+div.dataTables_wrapper {
+    width: 900px;
+    margin: 0 auto;
+    border: 1px solid black;
+    padding-top: 12px;
+    padding-right: 20px;
+    padding-left: 20px;
+    padding-bottom: 12px;
+}
+#data_t{
+   
+}

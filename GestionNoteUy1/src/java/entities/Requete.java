@@ -6,6 +6,8 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,10 +19,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -32,10 +37,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Requete.findAll", query = "SELECT r FROM Requete r"),
     @NamedQuery(name = "Requete.findByIdrequete", query = "SELECT r FROM Requete r WHERE r.idrequete = :idrequete"),
-    @NamedQuery(name = "Requete.findByObjet", query = "SELECT r FROM Requete r WHERE r.objet = :objet"),
-    @NamedQuery(name = "Requete.findByDateRequete", query = "SELECT r FROM Requete r WHERE r.dateRequete = :dateRequete"),
-    @NamedQuery(name = "Requete.findByEtat", query = "SELECT r FROM Requete r WHERE r.etat = :etat"),
+    @NamedQuery(name = "Requete.findByObjetrequete", query = "SELECT r FROM Requete r WHERE r.objetrequete = :objetrequete"),
+    @NamedQuery(name = "Requete.findByDaterequete", query = "SELECT r FROM Requete r WHERE r.daterequete = :daterequete"),
+    @NamedQuery(name = "Requete.findByEtatrequete", query = "SELECT r FROM Requete r WHERE r.etatrequete = :etatrequete"),
     @NamedQuery(name = "Requete.findByContenu", query = "SELECT r FROM Requete r WHERE r.contenu = :contenu"),
+    @NamedQuery(name = "Requete.findByPiecejointe", query = "SELECT r FROM Requete r WHERE r.piecejointe = :piecejointe"),
     @NamedQuery(name = "Requete.findByTyperequete", query = "SELECT r FROM Requete r WHERE r.typerequete = :typerequete")})
 public class Requete implements Serializable {
 
@@ -46,28 +52,34 @@ public class Requete implements Serializable {
     @Column(name = "idrequete")
     private Integer idrequete;
     @Size(max = 2147483647)
-    @Column(name = "objet")
-    private String objet;
-    @Size(max = 10)
-    @Column(name = "date_requete")
-    private String dateRequete;
+    @Column(name = "objetrequete")
+    private String objetrequete;
+    @Column(name = "daterequete")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date daterequete;
     @Size(max = 30)
-    @Column(name = "etat")
-    private String etat;
+    @Column(name = "etatrequete")
+    private String etatrequete;
     @Size(max = 2147483647)
     @Column(name = "contenu")
     private String contenu;
-    @Size(max = 30)
+    @Size(max = 2147483647)
+    @Column(name = "piecejointe")
+    private String piecejointe;
+    @Size(max = 128)
     @Column(name = "typerequete")
     private String typerequete;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "idrequete")
-    private Reponse reponse;
-    @JoinColumn(name = "idmatiere", referencedColumnName = "idmatiere")
-    @ManyToOne
-    private Matiere idmatiere;
-    @JoinColumn(name = "matricule", referencedColumnName = "matricule")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idrequete")
+    private List<Reponse> reponseList;
+    @JoinColumn(name = "idreaueteenseignant", referencedColumnName = "idreaueteenseignant")
     @ManyToOne(optional = false)
-    private Etudiant matricule;
+    private Requeteenseignant idreaueteenseignant;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idrequete")
+    private List<Requetedecanat> requetedecanatList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idrequete")
+    private List<Requetematiere> requetematiereList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idrequete")
+    private List<Requetejury> requetejuryList;
 
     public Requete() {
     }
@@ -84,28 +96,28 @@ public class Requete implements Serializable {
         this.idrequete = idrequete;
     }
 
-    public String getObjet() {
-        return objet;
+    public String getObjetrequete() {
+        return objetrequete;
     }
 
-    public void setObjet(String objet) {
-        this.objet = objet;
+    public void setObjetrequete(String objetrequete) {
+        this.objetrequete = objetrequete;
     }
 
-    public String getDateRequete() {
-        return dateRequete;
+    public Date getDaterequete() {
+        return daterequete;
     }
 
-    public void setDateRequete(String dateRequete) {
-        this.dateRequete = dateRequete;
+    public void setDaterequete(Date daterequete) {
+        this.daterequete = daterequete;
     }
 
-    public String getEtat() {
-        return etat;
+    public String getEtatrequete() {
+        return etatrequete;
     }
 
-    public void setEtat(String etat) {
-        this.etat = etat;
+    public void setEtatrequete(String etatrequete) {
+        this.etatrequete = etatrequete;
     }
 
     public String getContenu() {
@@ -116,6 +128,14 @@ public class Requete implements Serializable {
         this.contenu = contenu;
     }
 
+    public String getPiecejointe() {
+        return piecejointe;
+    }
+
+    public void setPiecejointe(String piecejointe) {
+        this.piecejointe = piecejointe;
+    }
+
     public String getTyperequete() {
         return typerequete;
     }
@@ -124,28 +144,48 @@ public class Requete implements Serializable {
         this.typerequete = typerequete;
     }
 
-    public Reponse getReponse() {
-        return reponse;
+    @XmlTransient
+    public List<Reponse> getReponseList() {
+        return reponseList;
     }
 
-    public void setReponse(Reponse reponse) {
-        this.reponse = reponse;
+    public void setReponseList(List<Reponse> reponseList) {
+        this.reponseList = reponseList;
     }
 
-    public Matiere getIdmatiere() {
-        return idmatiere;
+    public Requeteenseignant getIdreaueteenseignant() {
+        return idreaueteenseignant;
     }
 
-    public void setIdmatiere(Matiere idmatiere) {
-        this.idmatiere = idmatiere;
+    public void setIdreaueteenseignant(Requeteenseignant idreaueteenseignant) {
+        this.idreaueteenseignant = idreaueteenseignant;
     }
 
-    public Etudiant getMatricule() {
-        return matricule;
+    @XmlTransient
+    public List<Requetedecanat> getRequetedecanatList() {
+        return requetedecanatList;
     }
 
-    public void setMatricule(Etudiant matricule) {
-        this.matricule = matricule;
+    public void setRequetedecanatList(List<Requetedecanat> requetedecanatList) {
+        this.requetedecanatList = requetedecanatList;
+    }
+
+    @XmlTransient
+    public List<Requetematiere> getRequetematiereList() {
+        return requetematiereList;
+    }
+
+    public void setRequetematiereList(List<Requetematiere> requetematiereList) {
+        this.requetematiereList = requetematiereList;
+    }
+
+    @XmlTransient
+    public List<Requetejury> getRequetejuryList() {
+        return requetejuryList;
+    }
+
+    public void setRequetejuryList(List<Requetejury> requetejuryList) {
+        this.requetejuryList = requetejuryList;
     }
 
     @Override

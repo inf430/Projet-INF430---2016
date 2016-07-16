@@ -37,9 +37,9 @@ public class UeClasse implements Serializable {
     @Basic(optional = false)
     @Column(name = "idueclasse")
     private Integer idueclasse;
-    @JoinColumn(name = "code", referencedColumnName = "code")
+    @JoinColumn(name = "codeue", referencedColumnName = "codeue")
     @ManyToOne(optional = false)
-    private Ue code;
+    private Ue codeue;
     @JoinColumn(name = "idclasse", referencedColumnName = "idclasse")
     @ManyToOne(optional = false)
     private Classe idclasse;
@@ -62,12 +62,12 @@ public class UeClasse implements Serializable {
         this.idueclasse = idueclasse;
     }
 
-    public Ue getCode() {
-        return code;
+    public Ue getCodeue() {
+        return codeue;
     }
 
-    public void setCode(Ue code) {
-        this.code = code;
+    public void setCodeue(Ue codeue) {
+        this.codeue = codeue;
     }
 
     public Classe getIdclasse() {

@@ -8,16 +8,17 @@ package entities;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -45,14 +46,11 @@ public class Role implements Serializable {
     @Size(max = 50)
     @Column(name = "role")
     private String role;
-    @ManyToMany(mappedBy = "roleList")
-    private List<Droit> droitList;
-    @ManyToMany(mappedBy = "roleList")
-    private List<Enseignant> enseignantList;
-    @ManyToMany(mappedBy = "roleList")
-    private List<Etudiant> etudiantList;
-    @ManyToMany(mappedBy = "roleList")
-    private List<Administratif> administratifList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idrole")
+    private List<DroitRole> droitRoleList;
+    @JoinColumn(name = "idpersonne", referencedColumnName = "idpersonne")
+    @ManyToOne(optional = false)
+    private Personne idpersonne;
     @JoinColumn(name = "idadmin", referencedColumnName = "idadmin")
     @ManyToOne(optional = false)
     private Administrateur idadmin;
@@ -81,39 +79,20 @@ public class Role implements Serializable {
     }
 
     @XmlTransient
-    public List<Droit> getDroitList() {
-        return droitList;
+    public List<DroitRole> getDroitRoleList() {
+        return droitRoleList;
     }
 
-    public void setDroitList(List<Droit> droitList) {
-        this.droitList = droitList;
+    public void setDroitRoleList(List<DroitRole> droitRoleList) {
+        this.droitRoleList = droitRoleList;
     }
 
-    @XmlTransient
-    public List<Enseignant> getEnseignantList() {
-        return enseignantList;
+    public Personne getIdpersonne() {
+        return idpersonne;
     }
 
-    public void setEnseignantList(List<Enseignant> enseignantList) {
-        this.enseignantList = enseignantList;
-    }
-
-    @XmlTransient
-    public List<Etudiant> getEtudiantList() {
-        return etudiantList;
-    }
-
-    public void setEtudiantList(List<Etudiant> etudiantList) {
-        this.etudiantList = etudiantList;
-    }
-
-    @XmlTransient
-    public List<Administratif> getAdministratifList() {
-        return administratifList;
-    }
-
-    public void setAdministratifList(List<Administratif> administratifList) {
-        this.administratifList = administratifList;
+    public void setIdpersonne(Personne idpersonne) {
+        this.idpersonne = idpersonne;
     }
 
     public Administrateur getIdadmin() {

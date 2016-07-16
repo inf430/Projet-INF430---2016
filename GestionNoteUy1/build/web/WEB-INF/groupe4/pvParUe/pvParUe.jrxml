@@ -1,0 +1,642 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="842" pageHeight="760" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="eefe6be0-6110-4b01-85c5-986653919a96">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="gesnoteDataset" uuid="f0a6b108-9223-4907-aa0f-31e745edf860">
+		<queryString>
+			<![CDATA[SELECT
+     ue."code" AS ue_code,
+     ue."libelle" AS ue_libelle,
+     filiere."libelle" AS filiere_libelle,
+     classe."nom" AS classe_nom,
+     classe."niveau" AS classe_niveau,
+     semestre."semestre" AS semestre_semestre,
+     etudiant."matricule" AS etudiant_matricule,
+     etudiant_classe."annee" AS etudiant_classe_annee,
+     personne."nom" AS personne_nom,
+     personne."prenom" AS personne_prenom,
+     etudiant_exam."anonymat" AS etudiant_exam_anonymat,
+     note_cc,
+	 anonymat_cc,
+	 note_ep,
+	 anonymat_ep,
+	 note_ee,
+	 anonymat_ee
+FROM
+     "public"."filiere" filiere INNER JOIN "public"."classe" classe ON filiere."idfiliere" = classe."idfiliere"
+     INNER JOIN "public"."etudiant_classe" etudiant_classe ON classe."idclasse" = etudiant_classe."idclasse"
+     INNER JOIN "public"."etudiant" etudiant ON etudiant_classe."matricule" = etudiant."matricule"
+     INNER JOIN "public"."personne" personne ON etudiant."idpersonne" = personne."idpersonne"
+     INNER JOIN "public"."etudiant_exam" etudiant_exam ON etudiant."matricule" = etudiant_exam."matricule"
+     INNER JOIN "public"."examen" examen ON etudiant_exam."idetudiantexam" = examen."idexamen",
+     "public"."semestre" semestre INNER JOIN "public"."ue" ue ON semestre."idsemestre" = ue."idsemestre",
+	(SELECT etudiant_exam."anonymat" AS anonymat_cc,etudiant_exam."note" AS note_cc,
+		etudiant_exam."matricule" AS mat_etud, etudiant_exam."annee" AS etudiant_exam_annee
+		FROM
+			 "public"."examen" examen INNER JOIN "public"."etudiant_exam" etudiant_exam ON examen."idexamen" = etudiant_exam."idetudiantexam"
+		WHERE
+			 examen.type = 'CCC') exam_ccc,
+	(SELECT etudiant_exam."anonymat" AS anonymat_ep,etudiant_exam."note" AS note_ep,
+		etudiant_exam."matricule" AS mat_etud, etudiant_exam."annee" AS etudiant_exam_annee
+		FROM
+			 "public"."examen" examen INNER JOIN "public"."etudiant_exam" etudiant_exam ON examen."idexamen" = etudiant_exam."idetudiantexam"
+		WHERE
+			 examen.type = 'EP') exam_ep,
+	(SELECT etudiant_exam."anonymat" AS anonymat_ee,etudiant_exam."note" AS note_ee,
+		etudiant_exam."matricule" AS mat_etud, etudiant_exam."annee" AS etudiant_exam_annee
+		FROM
+			 "public"."examen" examen INNER JOIN "public"."etudiant_exam" etudiant_exam ON examen."idexamen" = etudiant_exam."idetudiantexam"
+		WHERE
+			 examen.type = 'EE') exam_ee
+WHERE
+     ue.code = 'INF430'
+ AND filiere.code = 'INF'
+ AND classe.niveau = 'INF-L3'
+ AND exam_ccc.mat_etud = etudiant.matricule
+ AND exam_ccc.etudiant_exam_annee = etudiant_classe.annee
+ AND exam_ep.etudiant_exam_annee = etudiant_classe.annee
+ AND exam_ep.mat_etud = etudiant.matricule
+ AND exam_ee.etudiant_exam_annee = etudiant_classe.annee
+ AND exam_ee.mat_etud = etudiant.matricule
+ORDER BY personne.nom, personne.prenom ASC]]>
+		</queryString>
+		<field name="ue_code" class="java.lang.String"/>
+		<field name="ue_libelle" class="java.lang.String"/>
+		<field name="filiere_libelle" class="java.lang.String"/>
+		<field name="classe_nom" class="java.lang.String"/>
+		<field name="classe_niveau" class="java.lang.String"/>
+		<field name="semestre_semestre" class="java.lang.String"/>
+		<field name="etudiant_matricule" class="java.lang.String"/>
+		<field name="etudiant_classe_annee" class="java.lang.String"/>
+		<field name="personne_nom" class="java.lang.String"/>
+		<field name="personne_prenom" class="java.lang.String"/>
+		<field name="etudiant_exam_anonymat" class="java.lang.String"/>
+		<field name="note_cc" class="java.lang.Double"/>
+		<field name="anonymat_cc" class="java.lang.String"/>
+		<field name="note_ep" class="java.lang.Double"/>
+		<field name="anonymat_ep" class="java.lang.String"/>
+		<field name="note_ee" class="java.lang.Double"/>
+		<field name="anonymat_ee" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="code_ue" class="java.lang.String"/>
+	<parameter name="code_filiere" class="java.lang.String"/>
+	<parameter name="niveau" class="java.lang.String"/>
+	<parameter name="id_semestre" class="java.lang.Integer"/>
+	<parameter name="aneaca" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT DISTINCT
+     ue."libelle" AS ue_libelle,
+     filiere."libelle" AS filiere_libelle,
+     classe."nom" AS classe_nom,
+     classe."niveau" AS classe_niveau,
+     semestre."semestre" AS semestre_semestre,
+     etudiant."matricule" AS etudiant_matricule,
+     personne."nom" AS personne_nom,
+     personne."prenom" AS personne_prenom,
+	 niveau."cycle" AS cycle,
+     note_cc,
+	 anonymat_cc,
+	 note_ep,
+	 anonymat_ep,
+	 note_ee,
+	 anonymat_ee
+FROM
+     "public"."filiere" filiere INNER JOIN "public"."classe" classe ON filiere."idfiliere" = classe."idfiliere"
+     INNER JOIN "public"."etudiant_classe" etudiant_classe ON classe."idclasse" = etudiant_classe."idclasse"
+     INNER JOIN "public"."etudiant" etudiant ON etudiant_classe."matricule" = etudiant."matricule"
+     INNER JOIN "public"."personne" personne ON etudiant."idpersonne" = personne."idpersonne"
+     INNER JOIN "public"."etudiant_exam" etudiant_exam ON etudiant."matricule" = etudiant_exam."matricule"
+     INNER JOIN "public"."matiere_exam" matiere_exam ON matiere_exam."idmatiereexam" = etudiant_exam."idmatiereexam"
+     INNER JOIN "public"."examen" examen ON matiere_exam."idexamen" = examen."idexamen"
+	 INNER JOIN "public"."niveau" niveau ON niveau."niveau" = classe."niveau" ,
+     "public"."semestre" semestre INNER JOIN "public"."ue" ue ON semestre."idsemestre" = ue."idsemestre",
+	(SELECT etudiant_exam."anonymat" AS anonymat_cc,etudiant_exam."note" AS note_cc,
+		etudiant_exam."matricule" AS mat_etud, matiere_exam."annee" AS etudiant_exam_annee
+		FROM
+			"public"."examen" examen INNER JOIN "public"."matiere_exam" matiere_exam ON matiere_exam."idexamen" = examen."idexamen"
+			INNER JOIN "public"."etudiant_exam" etudiant_exam ON etudiant_exam."idmatiereexam" = matiere_exam."idmatiereexam"
+		WHERE
+			 examen.type_exam = 'CCC') exam_ccc LEFT JOIN 
+	(SELECT etudiant_exam."anonymat" AS anonymat_ep,etudiant_exam."note" AS note_ep,
+		etudiant_exam."matricule" AS mat_etud, matiere_exam."annee" AS etudiant_exam_annee
+		FROM
+			 "public"."examen" examen INNER JOIN "public"."matiere_exam" matiere_exam ON matiere_exam."idexamen" = examen."idexamen"
+			INNER JOIN "public"."etudiant_exam" etudiant_exam ON etudiant_exam."idmatiereexam" = matiere_exam."idmatiereexam"
+		WHERE
+			 examen.type_exam = 'EP') exam_ep ON exam_ccc."mat_etud" = exam_ep."mat_etud" LEFT JOIN
+	(SELECT etudiant_exam."anonymat" AS anonymat_ee,etudiant_exam."note" AS note_ee,
+		etudiant_exam."matricule" AS mat_etud, matiere_exam."annee" AS etudiant_exam_annee
+		FROM
+			 "public"."examen" examen INNER JOIN "public"."matiere_exam" matiere_exam ON matiere_exam."idexamen" = examen."idexamen"
+			INNER JOIN "public"."etudiant_exam" etudiant_exam ON etudiant_exam."idmatiereexam" = matiere_exam."idmatiereexam"
+		WHERE
+			 examen.type_exam = 'EE') exam_ee ON exam_ep."mat_etud" = exam_ep."mat_etud"
+WHERE
+     ue.code = $P{code_ue}
+ AND filiere.code = $P{code_filiere}
+ AND classe.niveau = $P{niveau}
+ AND ue.idsemestre = $P{id_semestre}
+ AND semestre.idsemestre = ue.idsemestre
+ AND exam_ccc.mat_etud = etudiant.matricule
+ AND exam_ccc.etudiant_exam_annee = etudiant_classe.annee
+ AND exam_ep.etudiant_exam_annee = etudiant_classe.annee
+ AND exam_ep.mat_etud = etudiant.matricule
+ AND exam_ee.etudiant_exam_annee = etudiant_classe.annee
+ AND exam_ee.mat_etud = etudiant.matricule
+ AND exam_ee.etudiant_exam_annee = $P{aneaca}
+ORDER BY personne.nom ASC]]>
+	</queryString>
+	<field name="ue_libelle" class="java.lang.String"/>
+	<field name="filiere_libelle" class="java.lang.String"/>
+	<field name="classe_nom" class="java.lang.String"/>
+	<field name="classe_niveau" class="java.lang.String"/>
+	<field name="semestre_semestre" class="java.lang.String"/>
+	<field name="etudiant_matricule" class="java.lang.String"/>
+	<field name="personne_nom" class="java.lang.String"/>
+	<field name="personne_prenom" class="java.lang.String"/>
+	<field name="cycle" class="java.lang.String"/>
+	<field name="note_cc" class="java.lang.Double"/>
+	<field name="anonymat_cc" class="java.lang.String"/>
+	<field name="note_ep" class="java.lang.Double"/>
+	<field name="anonymat_ep" class="java.lang.String"/>
+	<field name="note_ee" class="java.lang.Double"/>
+	<field name="anonymat_ee" class="java.lang.String"/>
+	<variable name="line_number" class="java.lang.Integer">
+		<variableExpression><![CDATA[$V{line_number} + 1]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="total_sur_cent" class="java.lang.Double">
+		<variableExpression><![CDATA[$F{note_cc}+$F{note_ee}+$F{note_ep}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="162" splitType="Stretch">
+			<staticText>
+				<reportElement x="316" y="0" width="166" height="20" uuid="2ac333f8-845f-403f-bfd4-66fccc93d558"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[UNIVERSITE DE YAOUNDE I]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="316" y="20" width="166" height="20" uuid="5fcfc651-eee6-4d04-8e21-cb10bfee7e1e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[UNIVERSITY OF YAOUNDE I]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="316" y="40" width="166" height="20" forecolor="#999999" uuid="cffcf0b4-bba7-4161-8128-d68147d54573"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FACULTE DES SCIENCES]]></text>
+			</staticText>
+			<line>
+				<reportElement x="239" y="65" width="328" height="1" forecolor="#999999" uuid="3269f7f0-fda0-43fe-9adc-d2768c5f4585"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="272" y="70" width="264" height="20" uuid="c79e225b-83e9-476b-a01f-9c0a50d6910f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PROCES VERBAL DE L'UNITE D'ENSEIGNEMENT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="94" width="76" height="15" uuid="dee6de46-e99b-4129-89a1-fcad69e2f8ce"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[Code de l'UE : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-1" y="109" width="44" height="15" uuid="ae585979-c8d6-403f-8bb0-e2f916b2714b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[Filière : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-1" y="124" width="44" height="15" uuid="714844d4-be48-40d8-a75b-85bfed46a2a7"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[Grade : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="139" width="54" height="15" uuid="9b6638bd-6e3c-436d-87d4-4b8ba5092e58"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[Semestre : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="185" y="94" width="46" height="15" uuid="768ee6a0-1b69-4140-854c-2d61ef7c6c5d"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[Intitulé : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="185" y="124" width="67" height="15" uuid="4dbe9539-1e33-4dfe-a309-37a9bfa80b21"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[Spécialité : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="185" y="144" width="100" height="15" uuid="a9ff87a7-b432-4162-a516-f76fa498222c"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[Année académique : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="43" y="109" width="156" height="15" uuid="af2acad3-6b35-4201-b545-ad6cb837e4d3"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cycle} + " " + $F{filiere_libelle}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="54" y="139" width="89" height="15" uuid="7b179f31-0c0f-46e8-954f-34532a7614f1"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{semestre_semestre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="231" y="94" width="112" height="15" uuid="f487fcd0-6ec3-4d45-a013-330e83cc0eb5"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ue_libelle}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="76" y="94" width="67" height="15" uuid="8f55be9e-38f0-4f80-b560-e788f447827a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{code_ue}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="43" y="124" width="100" height="15" uuid="285155a1-1c90-4ac0-807a-67424eeffffc"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{classe_niveau}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="285" y="144" width="100" height="15" uuid="5b15a1e1-bb50-4f70-955f-e81e484d0f29"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{aneaca}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="1" width="802" height="1" uuid="14ee9734-6311-42d8-8fa3-0ba39d57e37a"/>
+				<graphicElement>
+					<pen lineWidth="1.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="22" y="0" width="54" height="20" uuid="be369626-a7d8-4956-a142-fb2d05f002e0"/>
+				<box leftPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<text><![CDATA[Matricule]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="82" y="0" width="234" height="20" uuid="c449eeb9-319f-4e1a-82fc-790936a84d78"/>
+				<box leftPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Noms et prénoms]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="16" height="20" uuid="68c6b1b0-a0ff-4d1c-a33b-0fb07ca91013"/>
+				<box leftPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="327" y="0" width="38" height="20" uuid="e00a8e08-a2fa-4964-af63-277eea3d5bec"/>
+				<box leftPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Niveau]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="385" y="0" width="49" height="20" uuid="67e6eef2-744f-4d4c-a7d5-a796251c5631"/>
+				<box leftPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Ano_CCC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="454" y="0" width="44" height="20" uuid="1cd57140-b876-401e-82da-d365b1056042"/>
+				<box leftPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<text><![CDATA[CCC/30]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="604" y="0" width="42" height="20" uuid="69f7bb2a-3de3-4448-9720-b896e5f1aa55"/>
+				<box leftPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<text><![CDATA[Ano_EE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="662" y="0" width="43" height="20" uuid="755513f3-afa2-4c7c-9e9a-3b5a21231e82"/>
+				<box leftPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<text><![CDATA[EE/70]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="720" y="0" width="82" height="20" uuid="0724c3b0-769d-4fb8-9570-4e502dd72e7d"/>
+				<box leftPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<text><![CDATA[Total/100]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="20" width="802" height="1" uuid="ee7c1cb8-844c-4dde-8ebb-05a85297c868"/>
+			</line>
+			<staticText>
+				<reportElement x="511" y="1" width="38" height="20" uuid="58e70d25-c43e-4258-9d64-270d0519f531"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[Ano_EP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="559" y="1" width="37" height="20" uuid="e0d4da2b-dc1b-4fd6-a3bb-ed717de6fb31"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[EP]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="17" height="20" uuid="cb29c425-0685-4813-b533-92e3c04beeec"/>
+				<box leftPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{line_number}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="22" y="0" width="54" height="20" uuid="5267ae98-9020-4231-8f8c-34ea9155da57"/>
+				<box leftPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{etudiant_matricule}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="82" y="0" width="234" height="20" uuid="cda0611b-29de-4628-9b1a-15b32feada2c"/>
+				<box leftPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{personne_nom} + " " + $F{personne_prenom}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="327" y="0" width="38" height="20" uuid="271c106e-2043-4f05-b03a-1eab903dfcff"/>
+				<box leftPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{classe_niveau}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="385" y="0" width="49" height="20" uuid="a30c9b01-c34b-4f0e-8dc5-34f94bfb5e5d"/>
+				<box leftPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{anonymat_cc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="454" y="0" width="44" height="20" uuid="69ef4f1a-506e-4cb0-8611-53e49d244170"/>
+				<box leftPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{note_cc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="604" y="0" width="42" height="20" uuid="428f6873-8588-4331-b648-2bfd2217d2bb"/>
+				<box leftPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{anonymat_ee}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="662" y="0" width="43" height="20" uuid="b01a3bd0-c2d0-4124-9f37-eb6da13570c8"/>
+				<box leftPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{note_ee}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="720" y="0" width="82" height="20" uuid="6052bb45-89a7-40f2-abf9-1a489637435e"/>
+				<box leftPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{total_sur_cent}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="20" width="802" height="1" uuid="b382730b-6013-43dd-82bc-0afb92d307e1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="0" width="802" height="1" uuid="b041055e-c58f-4d04-82f5-ea96b138047f"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="511" y="1" width="38" height="20" uuid="407545cc-eeb8-4d14-9abf-4f61aaaf74b9"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{anonymat_ep}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="559" y="1" width="37" height="20" uuid="bb0cb0a4-83fe-4432-9124-7759914f0f27"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{note_ep}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="27" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="7" width="161" height="20" uuid="1d6e7358-8836-4043-81d0-69e7055eb107"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ue_libelle} + " - Semestre " + $F{semestre_semestre}  + ":" + $P{aneaca}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="641" y="7" width="59" height="20" uuid="66e69f9c-4d28-420c-ae74-18f461c8c2c9"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Imprimé le : ]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="700" y="4" width="100" height="20" uuid="ad7bfa59-2336-42bc-88ce-1ed9d2d3c4f9"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="353" y="7" width="80" height="20" uuid="2813f1fb-1128-4a8d-96fc-768ce5686c88"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="433" y="7" width="40" height="20" uuid="57341340-111e-4614-a4c0-23af81ece0f0"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="3" width="802" height="1" uuid="728291ac-2ca6-491f-9c1f-b0899a82ea85"/>
+				<graphicElement>
+					<pen lineWidth="1.5"/>
+				</graphicElement>
+			</line>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

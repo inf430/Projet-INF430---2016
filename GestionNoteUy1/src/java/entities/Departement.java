@@ -14,10 +14,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -32,7 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Departement.findAll", query = "SELECT d FROM Departement d"),
     @NamedQuery(name = "Departement.findByIddepartement", query = "SELECT d FROM Departement d WHERE d.iddepartement = :iddepartement"),
-    @NamedQuery(name = "Departement.findByCode", query = "SELECT d FROM Departement d WHERE d.code = :code"),
+    @NamedQuery(name = "Departement.findByCodedepartement", query = "SELECT d FROM Departement d WHERE d.codedepartement = :codedepartement"),
     @NamedQuery(name = "Departement.findByLibelle", query = "SELECT d FROM Departement d WHERE d.libelle = :libelle")})
 public class Departement implements Serializable {
 
@@ -42,12 +45,17 @@ public class Departement implements Serializable {
     @Basic(optional = false)
     @Column(name = "iddepartement")
     private Integer iddepartement;
-    @Size(max = 30)
-    @Column(name = "code")
-    private String code;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 30)
+    @Column(name = "codedepartement")
+    private String codedepartement;
     @Size(max = 30)
     @Column(name = "libelle")
     private String libelle;
+    @JoinColumn(name = "idfaculte", referencedColumnName = "idfaculte")
+    @ManyToOne
+    private Faculte idfaculte;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "iddepartement")
     private List<EnseignantChefDepartement> enseignantChefDepartementList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "iddepartement")
@@ -62,6 +70,11 @@ public class Departement implements Serializable {
         this.iddepartement = iddepartement;
     }
 
+    public Departement(Integer iddepartement, String codedepartement) {
+        this.iddepartement = iddepartement;
+        this.codedepartement = codedepartement;
+    }
+
     public Integer getIddepartement() {
         return iddepartement;
     }
@@ -70,12 +83,12 @@ public class Departement implements Serializable {
         this.iddepartement = iddepartement;
     }
 
-    public String getCode() {
-        return code;
+    public String getCodedepartement() {
+        return codedepartement;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setCodedepartement(String codedepartement) {
+        this.codedepartement = codedepartement;
     }
 
     public String getLibelle() {
@@ -84,6 +97,14 @@ public class Departement implements Serializable {
 
     public void setLibelle(String libelle) {
         this.libelle = libelle;
+    }
+
+    public Faculte getIdfaculte() {
+        return idfaculte;
+    }
+
+    public void setIdfaculte(Faculte idfaculte) {
+        this.idfaculte = idfaculte;
     }
 
     @XmlTransient

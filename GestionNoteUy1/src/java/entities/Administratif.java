@@ -6,24 +6,18 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -43,13 +37,6 @@ public class Administratif implements Serializable {
     @Basic(optional = false)
     @Column(name = "idadministatif")
     private Integer idadministatif;
-    @JoinTable(name = "roleadministratif", joinColumns = {
-        @JoinColumn(name = "idadministatif", referencedColumnName = "idadministatif")}, inverseJoinColumns = {
-        @JoinColumn(name = "idrole", referencedColumnName = "idrole")})
-    @ManyToMany
-    private List<Role> roleList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idadministatif")
-    private List<EtablirDroit> etablirDroitList;
     @JoinColumn(name = "idpersonne", referencedColumnName = "idpersonne")
     @OneToOne(optional = false)
     private Personne idpersonne;
@@ -67,24 +54,6 @@ public class Administratif implements Serializable {
 
     public void setIdadministatif(Integer idadministatif) {
         this.idadministatif = idadministatif;
-    }
-
-    @XmlTransient
-    public List<Role> getRoleList() {
-        return roleList;
-    }
-
-    public void setRoleList(List<Role> roleList) {
-        this.roleList = roleList;
-    }
-
-    @XmlTransient
-    public List<EtablirDroit> getEtablirDroitList() {
-        return etablirDroitList;
-    }
-
-    public void setEtablirDroitList(List<EtablirDroit> etablirDroitList) {
-        this.etablirDroitList = etablirDroitList;
     }
 
     public Personne getIdpersonne() {

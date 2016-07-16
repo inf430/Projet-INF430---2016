@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="listesAdmisMatiere" language="groovy" pageWidth="900" pageHeight="720" columnWidth="860" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenNoDataType="AllSectionsNoDetail" uuid="af4895f4-d294-4fd7-9a07-e3fedd6d4589">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="annee" class="java.lang.String"/>
+	<parameter name="idmatiere" class="java.lang.Integer"/>
+	<parameter name="idclasse" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT 
+  classe.nom AS classe_nom, 
+  etudiant_exam.matricule AS matricule, 
+  matiere.code AS matiere_code, 
+  matiere.libelle AS matiere_libelle, 
+  personne.nom AS nom, 
+  personne.prenom AS prenom, 
+  personne.sexe AS sexe, 
+  matiere_exam.annee AS annee,
+  sum(etudiant_exam.note * matiere_exam."pourcentage" / 20) as note
+FROM 
+  public.etudiant_exam, 
+  public.matiere_exam, 
+  public.matiere_ue, 
+  public.matiere, 
+  public.ue_classe, 
+  public.classe, 
+  public.etudiant, 
+  public.personne
+WHERE 
+  etudiant_exam.idmatiereexam = matiere_exam.idmatiereexam AND
+  matiere_ue.idmatiere = matiere.idmatiere AND
+  matiere.idmatiere = matiere_exam.idmatiere AND
+  ue_classe.code = matiere_ue.code AND
+  classe.idclasse = ue_classe.idclasse AND
+  etudiant.matricule = etudiant_exam.matricule AND
+  personne.idpersonne = etudiant.idpersonne AND
+     matiere_exam.annee = $P{annee}
+ AND matiere_exam.idmatiere = $P{idmatiere}
+ AND classe.idclasse = $P{idclasse}
+Group by (classe."nom" ,
+     etudiant_exam."matricule"
+     ,matiere."code"
+     ,matiere."libelle"
+     ,personne."nom"
+     ,personne."prenom"
+     ,personne."sexe"
+    , matiere_exam."annee")
+having  sum(etudiant_exam.note * matiere_exam."pourcentage" / 20)>=50]]>
+	</queryString>
+	<field name="classe_nom" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="matricule" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="matiere_code" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="matiere_libelle" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nom" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="prenom" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="sexe" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="note" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="annee" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="150">
+			<staticText>
+				<reportElement x="4" y="117" width="100" height="19" uuid="d5bd966a-d5bd-4b72-ab83-45d3d8cbcb78"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[ Listes Admis dans:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="104" y="117" width="184" height="19" forecolor="#000000" backcolor="#FFFFFF" uuid="a3a359ce-1771-4f13-a0db-7ef7cbd5428c"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{classe_nom}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="66" y="0" width="794" height="106" uuid="24b0781b-c871-4502-8c5d-4de0d8986d85"/>
+				<imageExpression><![CDATA["C:\\Projets\\Java EE\\Integration\\Projet-INF430---2016\\GestionNoteUy1\\web\\assets\\css\\images\\groupe4\\entete.PNG"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band/>
+	</pageHeader>
+	<columnHeader>
+		<band height="22">
+			<line>
+				<reportElement x="0" y="21" width="860" height="1" forecolor="#666666" uuid="43939174-d14e-4bfd-8fab-3fd3979bc264"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="75" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="c6d57c21-e29e-4c7c-9a60-db403a278093"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[matricule]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="194" y="0" width="169" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="62d2a52c-e72c-481c-a2d4-eb7e4ec71497"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[matiere_libelle]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="363" y="0" width="121" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="7b4aa28b-c375-49a3-9290-1bfb87115dbf"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[nom]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="484" y="0" width="120" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="473c5070-23c5-42ff-82c9-a5987ac79948"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[prenom]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="604" y="0" width="65" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="a9231f5b-a14f-41e9-a98c-22f8bde8b518"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[sexe]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="669" y="0" width="88" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="71fed997-5549-42d7-bb2f-4c34a23cd6e6"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[note]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="75" y="0" width="119" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="38d9244e-d4da-4286-aecb-fc0d0ce8641d"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[matiere_code]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="757" y="0" width="103" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="a6aada55-3cc7-43d8-8106-3bd553bb03d7"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[annee]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Prevent">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="20" width="860" height="1" uuid="203da700-d59c-41fe-b65b-a703b3065c4c"/>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="194" y="0" width="169" height="20" uuid="1b138ac4-a607-4984-856f-b869b1dcafbf"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{matiere_libelle}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="363" y="0" width="121" height="20" uuid="3458eaf8-6892-4b37-ae91-ef60c2d8ecc2"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nom}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="484" y="0" width="120" height="20" uuid="94d7e2d6-6f05-4ff3-abb5-f2b281820d90"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{prenom}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="604" y="0" width="65" height="20" uuid="bb9c5379-1b00-4cfb-aa42-0fb431c3b4ec"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sexe}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="669" y="0" width="107" height="20" uuid="4809348c-195a-4ef9-8860-b05d37c08c42"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{note}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="4" y="0" width="71" height="20" uuid="038e07fd-2538-4ca0-9656-f0b0374868f0"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{matricule}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="75" y="0" width="119" height="20" uuid="c3843d62-54cb-4e32-a89a-18c1af68a488"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{matiere_code}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="757" y="0" width="103" height="20" uuid="720a2414-c17e-4e84-b879-49dd5a6769dd"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{annee}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="50f2100c-4982-4dce-8e92-c86e47413c48"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="81c08e4b-98db-46f9-ac6d-ae9da53e1b51"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="721" y="4" width="55" height="13" uuid="988c3310-882a-45a8-b529-4a3bd849b147"/>
+				<textElement>
+					<font size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Imprimé le:]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="776" y="4" width="84" height="13" uuid="bf04b6b8-86e0-40ec-ae06-eda09d1fa007"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

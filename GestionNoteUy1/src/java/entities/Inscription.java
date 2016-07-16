@@ -40,9 +40,9 @@ public class Inscription implements Serializable {
     @JoinColumn(name = "idmatiere", referencedColumnName = "idmatiere")
     @ManyToOne(optional = false)
     private Matiere idmatiere;
-    @JoinColumn(name = "matricule", referencedColumnName = "matricule")
+    @JoinColumn(name = "matriculeetudiant", referencedColumnName = "matriculeetudiant")
     @ManyToOne(optional = false)
-    private Etudiant matricule;
+    private Etudiant matriculeetudiant;
     @JoinColumn(name = "annee", referencedColumnName = "annee")
     @ManyToOne(optional = false)
     private AnneeAcademique annee;
@@ -70,12 +70,12 @@ public class Inscription implements Serializable {
         this.idmatiere = idmatiere;
     }
 
-    public Etudiant getMatricule() {
-        return matricule;
+    public Etudiant getMatriculeetudiant() {
+        return matriculeetudiant;
     }
 
-    public void setMatricule(Etudiant matricule) {
-        this.matricule = matricule;
+    public void setMatriculeetudiant(Etudiant matriculeetudiant) {
+        this.matriculeetudiant = matriculeetudiant;
     }
 
     public AnneeAcademique getAnnee() {

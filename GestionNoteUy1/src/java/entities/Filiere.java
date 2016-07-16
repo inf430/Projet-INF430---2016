@@ -20,6 +20,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -34,7 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Filiere.findAll", query = "SELECT f FROM Filiere f"),
     @NamedQuery(name = "Filiere.findByIdfiliere", query = "SELECT f FROM Filiere f WHERE f.idfiliere = :idfiliere"),
-    @NamedQuery(name = "Filiere.findByCode", query = "SELECT f FROM Filiere f WHERE f.code = :code"),
+    @NamedQuery(name = "Filiere.findByCodefiliere", query = "SELECT f FROM Filiere f WHERE f.codefiliere = :codefiliere"),
     @NamedQuery(name = "Filiere.findByLibelle", query = "SELECT f FROM Filiere f WHERE f.libelle = :libelle")})
 public class Filiere implements Serializable {
 
@@ -44,9 +45,11 @@ public class Filiere implements Serializable {
     @Basic(optional = false)
     @Column(name = "idfiliere")
     private Integer idfiliere;
-    @Size(max = 30)
-    @Column(name = "code")
-    private String code;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 30)
+    @Column(name = "codefiliere")
+    private String codefiliere;
     @Size(max = 30)
     @Column(name = "libelle")
     private String libelle;
@@ -63,6 +66,11 @@ public class Filiere implements Serializable {
         this.idfiliere = idfiliere;
     }
 
+    public Filiere(Integer idfiliere, String codefiliere) {
+        this.idfiliere = idfiliere;
+        this.codefiliere = codefiliere;
+    }
+
     public Integer getIdfiliere() {
         return idfiliere;
     }
@@ -71,12 +79,12 @@ public class Filiere implements Serializable {
         this.idfiliere = idfiliere;
     }
 
-    public String getCode() {
-        return code;
+    public String getCodefiliere() {
+        return codefiliere;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setCodefiliere(String codefiliere) {
+        this.codefiliere = codefiliere;
     }
 
     public String getLibelle() {

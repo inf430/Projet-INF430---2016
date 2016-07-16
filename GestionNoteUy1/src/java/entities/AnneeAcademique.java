@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "AnneeAcademique.findAll", query = "SELECT a FROM AnneeAcademique a"),
     @NamedQuery(name = "AnneeAcademique.findByAnnee", query = "SELECT a FROM AnneeAcademique a WHERE a.annee = :annee"),
-    @NamedQuery(name = "AnneeAcademique.findByEtat", query = "SELECT a FROM AnneeAcademique a WHERE a.etat = :etat")})
+    @NamedQuery(name = "AnneeAcademique.findByEtatannee", query = "SELECT a FROM AnneeAcademique a WHERE a.etatannee = :etatannee")})
 public class AnneeAcademique implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -42,8 +42,8 @@ public class AnneeAcademique implements Serializable {
     @Column(name = "annee")
     private String annee;
     @Size(max = 30)
-    @Column(name = "etat")
-    private String etat;
+    @Column(name = "etatannee")
+    private String etatannee;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "annee")
     private List<EnseignantMat> enseignantMatList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "annee")
@@ -55,7 +55,7 @@ public class AnneeAcademique implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "annee")
     private List<EnseignantClasseJury> enseignantClasseJuryList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "annee")
-    private List<EtudiantExam> etudiantExamList;
+    private List<Requetedecanat> requetedecanatList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "annee")
     private List<Inscription> inscriptionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "annee")
@@ -80,12 +80,12 @@ public class AnneeAcademique implements Serializable {
         this.annee = annee;
     }
 
-    public String getEtat() {
-        return etat;
+    public String getEtatannee() {
+        return etatannee;
     }
 
-    public void setEtat(String etat) {
-        this.etat = etat;
+    public void setEtatannee(String etatannee) {
+        this.etatannee = etatannee;
     }
 
     @XmlTransient
@@ -134,12 +134,12 @@ public class AnneeAcademique implements Serializable {
     }
 
     @XmlTransient
-    public List<EtudiantExam> getEtudiantExamList() {
-        return etudiantExamList;
+    public List<Requetedecanat> getRequetedecanatList() {
+        return requetedecanatList;
     }
 
-    public void setEtudiantExamList(List<EtudiantExam> etudiantExamList) {
-        this.etudiantExamList = etudiantExamList;
+    public void setRequetedecanatList(List<Requetedecanat> requetedecanatList) {
+        this.requetedecanatList = requetedecanatList;
     }
 
     @XmlTransient
