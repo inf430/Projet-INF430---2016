@@ -37,9 +37,9 @@ public class EnseignantChefDepartement implements Serializable {
     @Basic(optional = false)
     @Column(name = "idenseignantchefdepartement")
     private Integer idenseignantchefdepartement;
-    @JoinColumn(name = "matricule", referencedColumnName = "matricule")
+    @JoinColumn(name = "matriculeenseignant", referencedColumnName = "matriculeenseignant")
     @ManyToOne(optional = false)
-    private Enseignant matricule;
+    private Enseignant matriculeenseignant;
     @JoinColumn(name = "iddepartement", referencedColumnName = "iddepartement")
     @ManyToOne(optional = false)
     private Departement iddepartement;
@@ -62,12 +62,12 @@ public class EnseignantChefDepartement implements Serializable {
         this.idenseignantchefdepartement = idenseignantchefdepartement;
     }
 
-    public Enseignant getMatricule() {
-        return matricule;
+    public Enseignant getMatriculeenseignant() {
+        return matriculeenseignant;
     }
 
-    public void setMatricule(Enseignant matricule) {
-        this.matricule = matricule;
+    public void setMatriculeenseignant(Enseignant matriculeenseignant) {
+        this.matriculeenseignant = matriculeenseignant;
     }
 
     public Departement getIddepartement() {

@@ -6,7 +6,7 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,10 +14,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -45,19 +41,15 @@ public class Droit implements Serializable {
     @Basic(optional = false)
     @Column(name = "iddroit")
     private Integer iddroit;
-    @Size(max = 255)
+    @Size(max = 50)
     @Column(name = "nom")
     private String nom;
-    @JoinTable(name = "appartenirdroit", joinColumns = {
-        @JoinColumn(name = "iddroit", referencedColumnName = "iddroit")}, inverseJoinColumns = {
-        @JoinColumn(name = "idrole", referencedColumnName = "idrole")})
-    @ManyToMany
-    private Collection<Role> roleCollection;
-    @JoinColumn(name = "idadmin", referencedColumnName = "idadmin")
-    @ManyToOne(optional = false)
-    private Administrateur idadmin;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "iddroit")
-    private Collection<EtablirDroit> etablirDroitCollection;
+    private List<Interdit> interditList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "iddroit")
+    private List<DroitRole> droitRoleList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "iddroit")
+    private List<EtablirDroit> etablirDroitList;
 
     public Droit() {
     }
@@ -83,29 +75,30 @@ public class Droit implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Role> getRoleCollection() {
-        return roleCollection;
+    public List<Interdit> getInterditList() {
+        return interditList;
     }
 
-    public void setRoleCollection(Collection<Role> roleCollection) {
-        this.roleCollection = roleCollection;
-    }
-
-    public Administrateur getIdadmin() {
-        return idadmin;
-    }
-
-    public void setIdadmin(Administrateur idadmin) {
-        this.idadmin = idadmin;
+    public void setInterditList(List<Interdit> interditList) {
+        this.interditList = interditList;
     }
 
     @XmlTransient
-    public Collection<EtablirDroit> getEtablirDroitCollection() {
-        return etablirDroitCollection;
+    public List<DroitRole> getDroitRoleList() {
+        return droitRoleList;
     }
 
-    public void setEtablirDroitCollection(Collection<EtablirDroit> etablirDroitCollection) {
-        this.etablirDroitCollection = etablirDroitCollection;
+    public void setDroitRoleList(List<DroitRole> droitRoleList) {
+        this.droitRoleList = droitRoleList;
+    }
+
+    @XmlTransient
+    public List<EtablirDroit> getEtablirDroitList() {
+        return etablirDroitList;
+    }
+
+    public void setEtablirDroitList(List<EtablirDroit> etablirDroitList) {
+        this.etablirDroitList = etablirDroitList;
     }
 
     @Override

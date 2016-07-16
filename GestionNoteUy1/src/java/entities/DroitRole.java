@@ -9,15 +9,13 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -25,33 +23,25 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author HP
  */
 @Entity
-@Table(name = "etablir_droit")
+@Table(name = "droit_role")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "EtablirDroit.findAll", query = "SELECT e FROM EtablirDroit e"),
-    @NamedQuery(name = "EtablirDroit.findByIdetablirdroit", query = "SELECT e FROM EtablirDroit e WHERE e.idetablirdroit = :idetablirdroit"),
-    @NamedQuery(name = "EtablirDroit.findByDatedeb", query = "SELECT e FROM EtablirDroit e WHERE e.datedeb = :datedeb"),
-    @NamedQuery(name = "EtablirDroit.findByDatefin", query = "SELECT e FROM EtablirDroit e WHERE e.datefin = :datefin")})
-public class EtablirDroit implements Serializable {
+    @NamedQuery(name = "DroitRole.findAll", query = "SELECT d FROM DroitRole d"),
+    @NamedQuery(name = "DroitRole.findByIdDroitrole", query = "SELECT d FROM DroitRole d WHERE d.idDroitrole = :idDroitrole")})
+public class DroitRole implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idetablirdroit")
-    private Integer idetablirdroit;
-    @Size(max = 10)
-    @Column(name = "datedeb")
-    private String datedeb;
-    @Size(max = 10)
-    @Column(name = "datefin")
-    private String datefin;
+    @NotNull
+    @Column(name = "id_droitrole")
+    private Integer idDroitrole;
     @JoinColumn(name = "codeue", referencedColumnName = "codeue")
     @ManyToOne(optional = false)
     private Ue codeue;
-    @JoinColumn(name = "idpersonne", referencedColumnName = "idpersonne")
+    @JoinColumn(name = "idrole", referencedColumnName = "idrole")
     @ManyToOne(optional = false)
-    private Personne idpersonne;
+    private Role idrole;
     @JoinColumn(name = "idmatiere", referencedColumnName = "idmatiere")
     @ManyToOne(optional = false)
     private Matiere idmatiere;
@@ -68,35 +58,19 @@ public class EtablirDroit implements Serializable {
     @ManyToOne(optional = false)
     private Classe idclasse;
 
-    public EtablirDroit() {
+    public DroitRole() {
     }
 
-    public EtablirDroit(Integer idetablirdroit) {
-        this.idetablirdroit = idetablirdroit;
+    public DroitRole(Integer idDroitrole) {
+        this.idDroitrole = idDroitrole;
     }
 
-    public Integer getIdetablirdroit() {
-        return idetablirdroit;
+    public Integer getIdDroitrole() {
+        return idDroitrole;
     }
 
-    public void setIdetablirdroit(Integer idetablirdroit) {
-        this.idetablirdroit = idetablirdroit;
-    }
-
-    public String getDatedeb() {
-        return datedeb;
-    }
-
-    public void setDatedeb(String datedeb) {
-        this.datedeb = datedeb;
-    }
-
-    public String getDatefin() {
-        return datefin;
-    }
-
-    public void setDatefin(String datefin) {
-        this.datefin = datefin;
+    public void setIdDroitrole(Integer idDroitrole) {
+        this.idDroitrole = idDroitrole;
     }
 
     public Ue getCodeue() {
@@ -107,12 +81,12 @@ public class EtablirDroit implements Serializable {
         this.codeue = codeue;
     }
 
-    public Personne getIdpersonne() {
-        return idpersonne;
+    public Role getIdrole() {
+        return idrole;
     }
 
-    public void setIdpersonne(Personne idpersonne) {
-        this.idpersonne = idpersonne;
+    public void setIdrole(Role idrole) {
+        this.idrole = idrole;
     }
 
     public Matiere getIdmatiere() {
@@ -158,18 +132,18 @@ public class EtablirDroit implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idetablirdroit != null ? idetablirdroit.hashCode() : 0);
+        hash += (idDroitrole != null ? idDroitrole.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof EtablirDroit)) {
+        if (!(object instanceof DroitRole)) {
             return false;
         }
-        EtablirDroit other = (EtablirDroit) object;
-        if ((this.idetablirdroit == null && other.idetablirdroit != null) || (this.idetablirdroit != null && !this.idetablirdroit.equals(other.idetablirdroit))) {
+        DroitRole other = (DroitRole) object;
+        if ((this.idDroitrole == null && other.idDroitrole != null) || (this.idDroitrole != null && !this.idDroitrole.equals(other.idDroitrole))) {
             return false;
         }
         return true;
@@ -177,7 +151,7 @@ public class EtablirDroit implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.EtablirDroit[ idetablirdroit=" + idetablirdroit + " ]";
+        return "entities.DroitRole[ idDroitrole=" + idDroitrole + " ]";
     }
     
 }

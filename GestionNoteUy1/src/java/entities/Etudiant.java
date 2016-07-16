@@ -6,15 +6,13 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -34,29 +32,28 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Etudiant.findAll", query = "SELECT e FROM Etudiant e"),
-    @NamedQuery(name = "Etudiant.findByMatricule", query = "SELECT e FROM Etudiant e WHERE e.matricule = :matricule")})
+    @NamedQuery(name = "Etudiant.findByMatriculeetudiant", query = "SELECT e FROM Etudiant e WHERE e.matriculeetudiant = :matriculeetudiant")})
 public class Etudiant implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 255)
-    @Column(name = "matricule")
-    private String matricule;
-    @JoinTable(name = "roleetudiant", joinColumns = {
-        @JoinColumn(name = "matricule", referencedColumnName = "matricule")}, inverseJoinColumns = {
-        @JoinColumn(name = "idrole", referencedColumnName = "idrole")})
-    @ManyToMany
-    private Collection<Role> roleCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "matricule")
-    private Collection<Requete> requeteCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "matricule")
-    private Collection<EtudiantExam> etudiantExamCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "matricule")
-    private Collection<Inscription> inscriptionCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "matricule")
-    private Collection<EtudiantClasse> etudiantClasseCollection;
+    @Size(min = 1, max = 10)
+    @Column(name = "matriculeetudiant")
+    private String matriculeetudiant;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "matriculeetudiant")
+    private List<Requeteenseignant> requeteenseignantList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "matriculeetudiant")
+    private List<DroitRole> droitRoleList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "matriculeetudiant")
+    private List<EtudiantExam> etudiantExamList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "matriculeetudiant")
+    private List<EtablirDroit> etablirDroitList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "matriculeetudiant")
+    private List<Inscription> inscriptionList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "matriculeetudiant")
+    private List<EtudiantClasse> etudiantClasseList;
     @JoinColumn(name = "idpersonne", referencedColumnName = "idpersonne")
     @OneToOne(optional = false)
     private Personne idpersonne;
@@ -64,61 +61,70 @@ public class Etudiant implements Serializable {
     public Etudiant() {
     }
 
-    public Etudiant(String matricule) {
-        this.matricule = matricule;
+    public Etudiant(String matriculeetudiant) {
+        this.matriculeetudiant = matriculeetudiant;
     }
 
-    public String getMatricule() {
-        return matricule;
+    public String getMatriculeetudiant() {
+        return matriculeetudiant;
     }
 
-    public void setMatricule(String matricule) {
-        this.matricule = matricule;
-    }
-
-    @XmlTransient
-    public Collection<Role> getRoleCollection() {
-        return roleCollection;
-    }
-
-    public void setRoleCollection(Collection<Role> roleCollection) {
-        this.roleCollection = roleCollection;
+    public void setMatriculeetudiant(String matriculeetudiant) {
+        this.matriculeetudiant = matriculeetudiant;
     }
 
     @XmlTransient
-    public Collection<Requete> getRequeteCollection() {
-        return requeteCollection;
+    public List<Requeteenseignant> getRequeteenseignantList() {
+        return requeteenseignantList;
     }
 
-    public void setRequeteCollection(Collection<Requete> requeteCollection) {
-        this.requeteCollection = requeteCollection;
-    }
-
-    @XmlTransient
-    public Collection<EtudiantExam> getEtudiantExamCollection() {
-        return etudiantExamCollection;
-    }
-
-    public void setEtudiantExamCollection(Collection<EtudiantExam> etudiantExamCollection) {
-        this.etudiantExamCollection = etudiantExamCollection;
+    public void setRequeteenseignantList(List<Requeteenseignant> requeteenseignantList) {
+        this.requeteenseignantList = requeteenseignantList;
     }
 
     @XmlTransient
-    public Collection<Inscription> getInscriptionCollection() {
-        return inscriptionCollection;
+    public List<DroitRole> getDroitRoleList() {
+        return droitRoleList;
     }
 
-    public void setInscriptionCollection(Collection<Inscription> inscriptionCollection) {
-        this.inscriptionCollection = inscriptionCollection;
+    public void setDroitRoleList(List<DroitRole> droitRoleList) {
+        this.droitRoleList = droitRoleList;
     }
 
     @XmlTransient
-    public Collection<EtudiantClasse> getEtudiantClasseCollection() {
-        return etudiantClasseCollection;
+    public List<EtudiantExam> getEtudiantExamList() {
+        return etudiantExamList;
     }
 
-    public void setEtudiantClasseCollection(Collection<EtudiantClasse> etudiantClasseCollection) {
-        this.etudiantClasseCollection = etudiantClasseCollection;
+    public void setEtudiantExamList(List<EtudiantExam> etudiantExamList) {
+        this.etudiantExamList = etudiantExamList;
+    }
+
+    @XmlTransient
+    public List<EtablirDroit> getEtablirDroitList() {
+        return etablirDroitList;
+    }
+
+    public void setEtablirDroitList(List<EtablirDroit> etablirDroitList) {
+        this.etablirDroitList = etablirDroitList;
+    }
+
+    @XmlTransient
+    public List<Inscription> getInscriptionList() {
+        return inscriptionList;
+    }
+
+    public void setInscriptionList(List<Inscription> inscriptionList) {
+        this.inscriptionList = inscriptionList;
+    }
+
+    @XmlTransient
+    public List<EtudiantClasse> getEtudiantClasseList() {
+        return etudiantClasseList;
+    }
+
+    public void setEtudiantClasseList(List<EtudiantClasse> etudiantClasseList) {
+        this.etudiantClasseList = etudiantClasseList;
     }
 
     public Personne getIdpersonne() {
@@ -132,7 +138,7 @@ public class Etudiant implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (matricule != null ? matricule.hashCode() : 0);
+        hash += (matriculeetudiant != null ? matriculeetudiant.hashCode() : 0);
         return hash;
     }
 
@@ -143,7 +149,7 @@ public class Etudiant implements Serializable {
             return false;
         }
         Etudiant other = (Etudiant) object;
-        if ((this.matricule == null && other.matricule != null) || (this.matricule != null && !this.matricule.equals(other.matricule))) {
+        if ((this.matriculeetudiant == null && other.matriculeetudiant != null) || (this.matriculeetudiant != null && !this.matriculeetudiant.equals(other.matriculeetudiant))) {
             return false;
         }
         return true;
@@ -151,7 +157,7 @@ public class Etudiant implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Etudiant[ matricule=" + matricule + " ]";
+        return "entities.Etudiant[ matriculeetudiant=" + matriculeetudiant + " ]";
     }
     
 }

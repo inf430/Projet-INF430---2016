@@ -6,7 +6,7 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,6 +18,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -42,22 +43,30 @@ public class Administrateur implements Serializable {
     @Basic(optional = false)
     @Column(name = "idadmin")
     private Integer idadmin;
-    @Size(max = 255)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "login")
     private String login;
-    @Size(max = 255)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 255)
     @Column(name = "password")
     private String password;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idadmin")
-    private Collection<Droit> droitCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idadmin")
-    private Collection<Role> roleCollection;
+    private List<Role> roleList;
 
     public Administrateur() {
     }
 
     public Administrateur(Integer idadmin) {
         this.idadmin = idadmin;
+    }
+
+    public Administrateur(Integer idadmin, String login, String password) {
+        this.idadmin = idadmin;
+        this.login = login;
+        this.password = password;
     }
 
     public Integer getIdadmin() {
@@ -85,21 +94,12 @@ public class Administrateur implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Droit> getDroitCollection() {
-        return droitCollection;
+    public List<Role> getRoleList() {
+        return roleList;
     }
 
-    public void setDroitCollection(Collection<Droit> droitCollection) {
-        this.droitCollection = droitCollection;
-    }
-
-    @XmlTransient
-    public Collection<Role> getRoleCollection() {
-        return roleCollection;
-    }
-
-    public void setRoleCollection(Collection<Role> roleCollection) {
-        this.roleCollection = roleCollection;
+    public void setRoleList(List<Role> roleList) {
+        this.roleList = roleList;
     }
 
     @Override

@@ -6,7 +6,7 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Ue.findAll", query = "SELECT u FROM Ue u"),
-    @NamedQuery(name = "Ue.findByCode", query = "SELECT u FROM Ue u WHERE u.code = :code"),
+    @NamedQuery(name = "Ue.findByCodeue", query = "SELECT u FROM Ue u WHERE u.codeue = :codeue"),
     @NamedQuery(name = "Ue.findByLibelle", query = "SELECT u FROM Ue u WHERE u.libelle = :libelle")})
 public class Ue implements Serializable {
 
@@ -40,33 +40,37 @@ public class Ue implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 255)
-    @Column(name = "code")
-    private String code;
-    @Size(max = 255)
+    @Size(min = 1, max = 30)
+    @Column(name = "codeue")
+    private String codeue;
+    @Size(max = 30)
     @Column(name = "libelle")
     private String libelle;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "code")
-    private Collection<MatiereUe> matiereUeCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codeue")
+    private List<MatiereUe> matiereUeList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codeue")
+    private List<DroitRole> droitRoleList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codeue")
+    private List<EtablirDroit> etablirDroitList;
     @JoinColumn(name = "idsemestre", referencedColumnName = "idsemestre")
     @ManyToOne(optional = false)
     private Semestre idsemestre;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "code")
-    private Collection<UeClasse> ueClasseCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codeue")
+    private List<UeClasse> ueClasseList;
 
     public Ue() {
     }
 
-    public Ue(String code) {
-        this.code = code;
+    public Ue(String codeue) {
+        this.codeue = codeue;
     }
 
-    public String getCode() {
-        return code;
+    public String getCodeue() {
+        return codeue;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setCodeue(String codeue) {
+        this.codeue = codeue;
     }
 
     public String getLibelle() {
@@ -78,12 +82,30 @@ public class Ue implements Serializable {
     }
 
     @XmlTransient
-    public Collection<MatiereUe> getMatiereUeCollection() {
-        return matiereUeCollection;
+    public List<MatiereUe> getMatiereUeList() {
+        return matiereUeList;
     }
 
-    public void setMatiereUeCollection(Collection<MatiereUe> matiereUeCollection) {
-        this.matiereUeCollection = matiereUeCollection;
+    public void setMatiereUeList(List<MatiereUe> matiereUeList) {
+        this.matiereUeList = matiereUeList;
+    }
+
+    @XmlTransient
+    public List<DroitRole> getDroitRoleList() {
+        return droitRoleList;
+    }
+
+    public void setDroitRoleList(List<DroitRole> droitRoleList) {
+        this.droitRoleList = droitRoleList;
+    }
+
+    @XmlTransient
+    public List<EtablirDroit> getEtablirDroitList() {
+        return etablirDroitList;
+    }
+
+    public void setEtablirDroitList(List<EtablirDroit> etablirDroitList) {
+        this.etablirDroitList = etablirDroitList;
     }
 
     public Semestre getIdsemestre() {
@@ -95,18 +117,18 @@ public class Ue implements Serializable {
     }
 
     @XmlTransient
-    public Collection<UeClasse> getUeClasseCollection() {
-        return ueClasseCollection;
+    public List<UeClasse> getUeClasseList() {
+        return ueClasseList;
     }
 
-    public void setUeClasseCollection(Collection<UeClasse> ueClasseCollection) {
-        this.ueClasseCollection = ueClasseCollection;
+    public void setUeClasseList(List<UeClasse> ueClasseList) {
+        this.ueClasseList = ueClasseList;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (code != null ? code.hashCode() : 0);
+        hash += (codeue != null ? codeue.hashCode() : 0);
         return hash;
     }
 
@@ -117,7 +139,7 @@ public class Ue implements Serializable {
             return false;
         }
         Ue other = (Ue) object;
-        if ((this.code == null && other.code != null) || (this.code != null && !this.code.equals(other.code))) {
+        if ((this.codeue == null && other.codeue != null) || (this.codeue != null && !this.codeue.equals(other.codeue))) {
             return false;
         }
         return true;
@@ -125,7 +147,7 @@ public class Ue implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Ue[ code=" + code + " ]";
+        return "entities.Ue[ codeue=" + codeue + " ]";
     }
     
 }

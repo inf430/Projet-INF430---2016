@@ -6,15 +6,13 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -35,7 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Enseignant.findAll", query = "SELECT e FROM Enseignant e"),
-    @NamedQuery(name = "Enseignant.findByMatricule", query = "SELECT e FROM Enseignant e WHERE e.matricule = :matricule"),
+    @NamedQuery(name = "Enseignant.findByMatriculeenseignant", query = "SELECT e FROM Enseignant e WHERE e.matriculeenseignant = :matriculeenseignant"),
     @NamedQuery(name = "Enseignant.findByGrade", query = "SELECT e FROM Enseignant e WHERE e.grade = :grade"),
     @NamedQuery(name = "Enseignant.findBySpecialite", query = "SELECT e FROM Enseignant e WHERE e.specialite = :specialite")})
 public class Enseignant implements Serializable {
@@ -44,30 +42,23 @@ public class Enseignant implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 255)
-    @Column(name = "matricule")
-    private String matricule;
-    @Size(max = 255)
+    @Size(min = 1, max = 10)
+    @Column(name = "matriculeenseignant")
+    private String matriculeenseignant;
+    @Size(max = 50)
     @Column(name = "grade")
     private String grade;
-    @Size(max = 255)
+    @Size(max = 50)
     @Column(name = "specialite")
     private String specialite;
-    @JoinTable(name = "roleenseignant", joinColumns = {
-        @JoinColumn(name = "matricule", referencedColumnName = "matricule")}, inverseJoinColumns = {
-        @JoinColumn(name = "idrole", referencedColumnName = "idrole")})
-    @ManyToMany
-    private Collection<Role> roleCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "matricule")
-    private Collection<EnseignantMat> enseignantMatCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "matricule")
-    private Collection<Reponse> reponseCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "matricule")
-    private Collection<EnseignantChefDepartement> enseignantChefDepartementCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "matricule")
-    private Collection<EnseignantClasseJury> enseignantClasseJuryCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "matricule")
-    private Collection<EtablirDroit> etablirDroitCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "matriculeenseignant")
+    private List<EnseignantMat> enseignantMatList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "matriculeenseignant")
+    private List<EnseignantChefDepartement> enseignantChefDepartementList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "matriculeenseignant")
+    private List<EnseignantClasseJury> enseignantClasseJuryList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "matriculeenseignant")
+    private List<Requeteenseignant> requeteenseignantList;
     @JoinColumn(name = "idpersonne", referencedColumnName = "idpersonne")
     @OneToOne(optional = false)
     private Personne idpersonne;
@@ -78,16 +69,16 @@ public class Enseignant implements Serializable {
     public Enseignant() {
     }
 
-    public Enseignant(String matricule) {
-        this.matricule = matricule;
+    public Enseignant(String matriculeenseignant) {
+        this.matriculeenseignant = matriculeenseignant;
     }
 
-    public String getMatricule() {
-        return matricule;
+    public String getMatriculeenseignant() {
+        return matriculeenseignant;
     }
 
-    public void setMatricule(String matricule) {
-        this.matricule = matricule;
+    public void setMatriculeenseignant(String matriculeenseignant) {
+        this.matriculeenseignant = matriculeenseignant;
     }
 
     public String getGrade() {
@@ -107,57 +98,39 @@ public class Enseignant implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Role> getRoleCollection() {
-        return roleCollection;
+    public List<EnseignantMat> getEnseignantMatList() {
+        return enseignantMatList;
     }
 
-    public void setRoleCollection(Collection<Role> roleCollection) {
-        this.roleCollection = roleCollection;
-    }
-
-    @XmlTransient
-    public Collection<EnseignantMat> getEnseignantMatCollection() {
-        return enseignantMatCollection;
-    }
-
-    public void setEnseignantMatCollection(Collection<EnseignantMat> enseignantMatCollection) {
-        this.enseignantMatCollection = enseignantMatCollection;
+    public void setEnseignantMatList(List<EnseignantMat> enseignantMatList) {
+        this.enseignantMatList = enseignantMatList;
     }
 
     @XmlTransient
-    public Collection<Reponse> getReponseCollection() {
-        return reponseCollection;
+    public List<EnseignantChefDepartement> getEnseignantChefDepartementList() {
+        return enseignantChefDepartementList;
     }
 
-    public void setReponseCollection(Collection<Reponse> reponseCollection) {
-        this.reponseCollection = reponseCollection;
-    }
-
-    @XmlTransient
-    public Collection<EnseignantChefDepartement> getEnseignantChefDepartementCollection() {
-        return enseignantChefDepartementCollection;
-    }
-
-    public void setEnseignantChefDepartementCollection(Collection<EnseignantChefDepartement> enseignantChefDepartementCollection) {
-        this.enseignantChefDepartementCollection = enseignantChefDepartementCollection;
+    public void setEnseignantChefDepartementList(List<EnseignantChefDepartement> enseignantChefDepartementList) {
+        this.enseignantChefDepartementList = enseignantChefDepartementList;
     }
 
     @XmlTransient
-    public Collection<EnseignantClasseJury> getEnseignantClasseJuryCollection() {
-        return enseignantClasseJuryCollection;
+    public List<EnseignantClasseJury> getEnseignantClasseJuryList() {
+        return enseignantClasseJuryList;
     }
 
-    public void setEnseignantClasseJuryCollection(Collection<EnseignantClasseJury> enseignantClasseJuryCollection) {
-        this.enseignantClasseJuryCollection = enseignantClasseJuryCollection;
+    public void setEnseignantClasseJuryList(List<EnseignantClasseJury> enseignantClasseJuryList) {
+        this.enseignantClasseJuryList = enseignantClasseJuryList;
     }
 
     @XmlTransient
-    public Collection<EtablirDroit> getEtablirDroitCollection() {
-        return etablirDroitCollection;
+    public List<Requeteenseignant> getRequeteenseignantList() {
+        return requeteenseignantList;
     }
 
-    public void setEtablirDroitCollection(Collection<EtablirDroit> etablirDroitCollection) {
-        this.etablirDroitCollection = etablirDroitCollection;
+    public void setRequeteenseignantList(List<Requeteenseignant> requeteenseignantList) {
+        this.requeteenseignantList = requeteenseignantList;
     }
 
     public Personne getIdpersonne() {
@@ -179,7 +152,7 @@ public class Enseignant implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (matricule != null ? matricule.hashCode() : 0);
+        hash += (matriculeenseignant != null ? matriculeenseignant.hashCode() : 0);
         return hash;
     }
 
@@ -190,7 +163,7 @@ public class Enseignant implements Serializable {
             return false;
         }
         Enseignant other = (Enseignant) object;
-        if ((this.matricule == null && other.matricule != null) || (this.matricule != null && !this.matricule.equals(other.matricule))) {
+        if ((this.matriculeenseignant == null && other.matriculeenseignant != null) || (this.matriculeenseignant != null && !this.matriculeenseignant.equals(other.matriculeenseignant))) {
             return false;
         }
         return true;
@@ -198,7 +171,7 @@ public class Enseignant implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Enseignant[ matricule=" + matricule + " ]";
+        return "entities.Enseignant[ matriculeenseignant=" + matriculeenseignant + " ]";
     }
     
 }

@@ -6,6 +6,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,8 +17,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -31,8 +33,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Reponse.findAll", query = "SELECT r FROM Reponse r"),
     @NamedQuery(name = "Reponse.findByIdreponse", query = "SELECT r FROM Reponse r WHERE r.idreponse = :idreponse"),
-    @NamedQuery(name = "Reponse.findByDateReponse", query = "SELECT r FROM Reponse r WHERE r.dateReponse = :dateReponse"),
-    @NamedQuery(name = "Reponse.findByContenu", query = "SELECT r FROM Reponse r WHERE r.contenu = :contenu")})
+    @NamedQuery(name = "Reponse.findByDatereponse", query = "SELECT r FROM Reponse r WHERE r.datereponse = :datereponse"),
+    @NamedQuery(name = "Reponse.findByDecision", query = "SELECT r FROM Reponse r WHERE r.decision = :decision")})
 public class Reponse implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,18 +43,18 @@ public class Reponse implements Serializable {
     @Basic(optional = false)
     @Column(name = "idreponse")
     private Integer idreponse;
-    @Size(max = 255)
-    @Column(name = "date_reponse")
-    private String dateReponse;
+    @Column(name = "datereponse")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date datereponse;
     @Size(max = 2147483647)
-    @Column(name = "contenu")
-    private String contenu;
+    @Column(name = "decision")
+    private String decision;
     @JoinColumn(name = "idrequete", referencedColumnName = "idrequete")
-    @OneToOne(optional = false)
-    private Requete idrequete;
-    @JoinColumn(name = "matricule", referencedColumnName = "matricule")
     @ManyToOne(optional = false)
-    private Enseignant matricule;
+    private Requete idrequete;
+    @JoinColumn(name = "idpersonne", referencedColumnName = "idpersonne")
+    @ManyToOne(optional = false)
+    private Personne idpersonne;
 
     public Reponse() {
     }
@@ -69,20 +71,20 @@ public class Reponse implements Serializable {
         this.idreponse = idreponse;
     }
 
-    public String getDateReponse() {
-        return dateReponse;
+    public Date getDatereponse() {
+        return datereponse;
     }
 
-    public void setDateReponse(String dateReponse) {
-        this.dateReponse = dateReponse;
+    public void setDatereponse(Date datereponse) {
+        this.datereponse = datereponse;
     }
 
-    public String getContenu() {
-        return contenu;
+    public String getDecision() {
+        return decision;
     }
 
-    public void setContenu(String contenu) {
-        this.contenu = contenu;
+    public void setDecision(String decision) {
+        this.decision = decision;
     }
 
     public Requete getIdrequete() {
@@ -93,12 +95,12 @@ public class Reponse implements Serializable {
         this.idrequete = idrequete;
     }
 
-    public Enseignant getMatricule() {
-        return matricule;
+    public Personne getIdpersonne() {
+        return idpersonne;
     }
 
-    public void setMatricule(Enseignant matricule) {
-        this.matricule = matricule;
+    public void setIdpersonne(Personne idpersonne) {
+        this.idpersonne = idpersonne;
     }
 
     @Override

@@ -40,9 +40,9 @@ public class MatiereUe implements Serializable {
     private Integer idmatiereue;
     @Column(name = "credit")
     private Integer credit;
-    @JoinColumn(name = "code", referencedColumnName = "code")
+    @JoinColumn(name = "codeue", referencedColumnName = "codeue")
     @ManyToOne(optional = false)
-    private Ue code;
+    private Ue codeue;
     @JoinColumn(name = "idmatiere", referencedColumnName = "idmatiere")
     @ManyToOne(optional = false)
     private Matiere idmatiere;
@@ -73,12 +73,12 @@ public class MatiereUe implements Serializable {
         this.credit = credit;
     }
 
-    public Ue getCode() {
-        return code;
+    public Ue getCodeue() {
+        return codeue;
     }
 
-    public void setCode(Ue code) {
-        this.code = code;
+    public void setCodeue(Ue codeue) {
+        this.codeue = codeue;
     }
 
     public Matiere getIdmatiere() {

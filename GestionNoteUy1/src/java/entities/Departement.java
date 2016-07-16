@@ -6,7 +6,7 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,10 +14,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -32,7 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Departement.findAll", query = "SELECT d FROM Departement d"),
     @NamedQuery(name = "Departement.findByIddepartement", query = "SELECT d FROM Departement d WHERE d.iddepartement = :iddepartement"),
-    @NamedQuery(name = "Departement.findByCode", query = "SELECT d FROM Departement d WHERE d.code = :code"),
+    @NamedQuery(name = "Departement.findByCodedepartement", query = "SELECT d FROM Departement d WHERE d.codedepartement = :codedepartement"),
     @NamedQuery(name = "Departement.findByLibelle", query = "SELECT d FROM Departement d WHERE d.libelle = :libelle")})
 public class Departement implements Serializable {
 
@@ -42,24 +45,34 @@ public class Departement implements Serializable {
     @Basic(optional = false)
     @Column(name = "iddepartement")
     private Integer iddepartement;
-    @Size(max = 255)
-    @Column(name = "code")
-    private String code;
-    @Size(max = 255)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 30)
+    @Column(name = "codedepartement")
+    private String codedepartement;
+    @Size(max = 30)
     @Column(name = "libelle")
     private String libelle;
+    @JoinColumn(name = "idfaculte", referencedColumnName = "idfaculte")
+    @ManyToOne
+    private Faculte idfaculte;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "iddepartement")
-    private Collection<EnseignantChefDepartement> enseignantChefDepartementCollection;
+    private List<EnseignantChefDepartement> enseignantChefDepartementList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "iddepartement")
-    private Collection<Enseignant> enseignantCollection;
+    private List<Enseignant> enseignantList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "iddepartement")
-    private Collection<Filiere> filiereCollection;
+    private List<Filiere> filiereList;
 
     public Departement() {
     }
 
     public Departement(Integer iddepartement) {
         this.iddepartement = iddepartement;
+    }
+
+    public Departement(Integer iddepartement, String codedepartement) {
+        this.iddepartement = iddepartement;
+        this.codedepartement = codedepartement;
     }
 
     public Integer getIddepartement() {
@@ -70,12 +83,12 @@ public class Departement implements Serializable {
         this.iddepartement = iddepartement;
     }
 
-    public String getCode() {
-        return code;
+    public String getCodedepartement() {
+        return codedepartement;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setCodedepartement(String codedepartement) {
+        this.codedepartement = codedepartement;
     }
 
     public String getLibelle() {
@@ -86,31 +99,39 @@ public class Departement implements Serializable {
         this.libelle = libelle;
     }
 
-    @XmlTransient
-    public Collection<EnseignantChefDepartement> getEnseignantChefDepartementCollection() {
-        return enseignantChefDepartementCollection;
+    public Faculte getIdfaculte() {
+        return idfaculte;
     }
 
-    public void setEnseignantChefDepartementCollection(Collection<EnseignantChefDepartement> enseignantChefDepartementCollection) {
-        this.enseignantChefDepartementCollection = enseignantChefDepartementCollection;
-    }
-
-    @XmlTransient
-    public Collection<Enseignant> getEnseignantCollection() {
-        return enseignantCollection;
-    }
-
-    public void setEnseignantCollection(Collection<Enseignant> enseignantCollection) {
-        this.enseignantCollection = enseignantCollection;
+    public void setIdfaculte(Faculte idfaculte) {
+        this.idfaculte = idfaculte;
     }
 
     @XmlTransient
-    public Collection<Filiere> getFiliereCollection() {
-        return filiereCollection;
+    public List<EnseignantChefDepartement> getEnseignantChefDepartementList() {
+        return enseignantChefDepartementList;
     }
 
-    public void setFiliereCollection(Collection<Filiere> filiereCollection) {
-        this.filiereCollection = filiereCollection;
+    public void setEnseignantChefDepartementList(List<EnseignantChefDepartement> enseignantChefDepartementList) {
+        this.enseignantChefDepartementList = enseignantChefDepartementList;
+    }
+
+    @XmlTransient
+    public List<Enseignant> getEnseignantList() {
+        return enseignantList;
+    }
+
+    public void setEnseignantList(List<Enseignant> enseignantList) {
+        this.enseignantList = enseignantList;
+    }
+
+    @XmlTransient
+    public List<Filiere> getFiliereList() {
+        return filiereList;
+    }
+
+    public void setFiliereList(List<Filiere> filiereList) {
+        this.filiereList = filiereList;
     }
 
     @Override

@@ -6,7 +6,7 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,6 +18,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -32,7 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Matiere.findAll", query = "SELECT m FROM Matiere m"),
     @NamedQuery(name = "Matiere.findByIdmatiere", query = "SELECT m FROM Matiere m WHERE m.idmatiere = :idmatiere"),
-    @NamedQuery(name = "Matiere.findByCode", query = "SELECT m FROM Matiere m WHERE m.code = :code"),
+    @NamedQuery(name = "Matiere.findByCodematiere", query = "SELECT m FROM Matiere m WHERE m.codematiere = :codematiere"),
     @NamedQuery(name = "Matiere.findByLibelle", query = "SELECT m FROM Matiere m WHERE m.libelle = :libelle")})
 public class Matiere implements Serializable {
 
@@ -42,26 +43,41 @@ public class Matiere implements Serializable {
     @Basic(optional = false)
     @Column(name = "idmatiere")
     private Integer idmatiere;
-    @Size(max = 255)
-    @Column(name = "code")
-    private String code;
-    @Size(max = 255)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 30)
+    @Column(name = "codematiere")
+    private String codematiere;
+    @Size(max = 50)
     @Column(name = "libelle")
     private String libelle;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmatiere")
-    private Collection<EnseignantMat> enseignantMatCollection;
+    private List<EnseignantMat> enseignantMatList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmatiere")
-    private Collection<MatiereUe> matiereUeCollection;
+    private List<MatiereUe> matiereUeList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmatiere")
-    private Collection<Inscription> inscriptionCollection;
+    private List<Requeteenseignant> requeteenseignantList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmatiere")
-    private Collection<MatiereExam> matiereExamCollection;
+    private List<DroitRole> droitRoleList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmatiere")
+    private List<EtablirDroit> etablirDroitList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmatiere")
+    private List<Inscription> inscriptionList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmatiere")
+    private List<MatiereExam> matiereExamList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmatiere")
+    private List<Requetematiere> requetematiereList;
 
     public Matiere() {
     }
 
     public Matiere(Integer idmatiere) {
         this.idmatiere = idmatiere;
+    }
+
+    public Matiere(Integer idmatiere, String codematiere) {
+        this.idmatiere = idmatiere;
+        this.codematiere = codematiere;
     }
 
     public Integer getIdmatiere() {
@@ -72,12 +88,12 @@ public class Matiere implements Serializable {
         this.idmatiere = idmatiere;
     }
 
-    public String getCode() {
-        return code;
+    public String getCodematiere() {
+        return codematiere;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setCodematiere(String codematiere) {
+        this.codematiere = codematiere;
     }
 
     public String getLibelle() {
@@ -89,39 +105,75 @@ public class Matiere implements Serializable {
     }
 
     @XmlTransient
-    public Collection<EnseignantMat> getEnseignantMatCollection() {
-        return enseignantMatCollection;
+    public List<EnseignantMat> getEnseignantMatList() {
+        return enseignantMatList;
     }
 
-    public void setEnseignantMatCollection(Collection<EnseignantMat> enseignantMatCollection) {
-        this.enseignantMatCollection = enseignantMatCollection;
-    }
-
-    @XmlTransient
-    public Collection<MatiereUe> getMatiereUeCollection() {
-        return matiereUeCollection;
-    }
-
-    public void setMatiereUeCollection(Collection<MatiereUe> matiereUeCollection) {
-        this.matiereUeCollection = matiereUeCollection;
+    public void setEnseignantMatList(List<EnseignantMat> enseignantMatList) {
+        this.enseignantMatList = enseignantMatList;
     }
 
     @XmlTransient
-    public Collection<Inscription> getInscriptionCollection() {
-        return inscriptionCollection;
+    public List<MatiereUe> getMatiereUeList() {
+        return matiereUeList;
     }
 
-    public void setInscriptionCollection(Collection<Inscription> inscriptionCollection) {
-        this.inscriptionCollection = inscriptionCollection;
+    public void setMatiereUeList(List<MatiereUe> matiereUeList) {
+        this.matiereUeList = matiereUeList;
     }
 
     @XmlTransient
-    public Collection<MatiereExam> getMatiereExamCollection() {
-        return matiereExamCollection;
+    public List<Requeteenseignant> getRequeteenseignantList() {
+        return requeteenseignantList;
     }
 
-    public void setMatiereExamCollection(Collection<MatiereExam> matiereExamCollection) {
-        this.matiereExamCollection = matiereExamCollection;
+    public void setRequeteenseignantList(List<Requeteenseignant> requeteenseignantList) {
+        this.requeteenseignantList = requeteenseignantList;
+    }
+
+    @XmlTransient
+    public List<DroitRole> getDroitRoleList() {
+        return droitRoleList;
+    }
+
+    public void setDroitRoleList(List<DroitRole> droitRoleList) {
+        this.droitRoleList = droitRoleList;
+    }
+
+    @XmlTransient
+    public List<EtablirDroit> getEtablirDroitList() {
+        return etablirDroitList;
+    }
+
+    public void setEtablirDroitList(List<EtablirDroit> etablirDroitList) {
+        this.etablirDroitList = etablirDroitList;
+    }
+
+    @XmlTransient
+    public List<Inscription> getInscriptionList() {
+        return inscriptionList;
+    }
+
+    public void setInscriptionList(List<Inscription> inscriptionList) {
+        this.inscriptionList = inscriptionList;
+    }
+
+    @XmlTransient
+    public List<MatiereExam> getMatiereExamList() {
+        return matiereExamList;
+    }
+
+    public void setMatiereExamList(List<MatiereExam> matiereExamList) {
+        this.matiereExamList = matiereExamList;
+    }
+
+    @XmlTransient
+    public List<Requetematiere> getRequetematiereList() {
+        return requetematiereList;
+    }
+
+    public void setRequetematiereList(List<Requetematiere> requetematiereList) {
+        this.requetematiereList = requetematiereList;
     }
 
     @Override
